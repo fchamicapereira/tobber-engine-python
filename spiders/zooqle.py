@@ -1,5 +1,4 @@
 import scrapy
-import re
 
 class Zooqle(scrapy.Spider):
     name = "zooqle"
@@ -16,6 +15,7 @@ class Zooqle(scrapy.Spider):
         #can be a list (like here) or a generator (use yield in that case)
         return [scrapy.Request(url=search, callback=self.parse)]
 
+    # pretty printing
     def printTorrent(self,torrent):
         print '\n{'
         print '\t Title: ' + torrent['title']
@@ -27,14 +27,6 @@ class Zooqle(scrapy.Spider):
         print '}\n'
 
     def parse(self, response):
-        # #get show name and replace "%20" for "_"
-        # tvshow = response.url.split('q=')[-1].split('&')[0].replace('%20','_')
-        #
-        # filename = 'zooqle-%s.html' % tvshow
-        # with open(filename, 'wb') as f:
-        #     f.write(response.body)
-        # self.log('Saved file %s' % filename)
-
         table = response.xpath('//table//tr//td')
 
         title   = table.xpath('//a[@class=" small"]')
