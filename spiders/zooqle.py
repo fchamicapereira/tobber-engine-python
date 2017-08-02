@@ -28,9 +28,9 @@ class Zooqle(scrapy.Spider):
         print '}\n'
 
     def parse(self, response):
-        table = response.xpath('//table//tr')
-
-        title   = table.xpath('//td[@class="text-trunc text-nowrap "]//a[@class=" small"]')
+        #xPath rules
+        table   = response.xpath('//table//tr')
+        title   = table.xpath('//td[contains(@class,"text-trunc text-nowrap")]//a[contains(@class," small")]')
         href    = title.xpath('//td//@href')
         peers   = table.xpath('//td//div[contains(@class,"progress prog")]/@title')
         magnet  = table.xpath('//td//a[@title="Magnet link"]/@href')
@@ -43,10 +43,8 @@ class Zooqle(scrapy.Spider):
             # the title's text comes with <hl> tags that are
             # troublessome, so this will remove all the
             # garbage
-
-            t = title[i].extract().split('>',1)[1][:-4]
-            t = t.replace('<hl>','')
-            t = t.replace('</hl>','')
+            prettyTitle = title[i].extract().split('>',1)[1][:-4]
+            prettyTitle = prettyTitle.replace('<hl>','').replace('</hl>','')
 
             # Seeders : X | Leechers: Y
             peersTuple = peers[i].re(r'.*(\d+).*(\d+)')
@@ -57,10 +55,8 @@ class Zooqle(scrapy.Spider):
                 'seeders':  peersTuple[0],
                 'leechers': peersTuple[1],
                 'size':     size[i].extract(),
-                'title':    t,
+                'title':    prettyTitle,
                 'href' :    self.site + href[i].extract()
             }
-
-            self.printTorrent(obj)
 
             yield obj
