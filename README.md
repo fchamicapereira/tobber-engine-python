@@ -4,7 +4,7 @@ Very basic project written in python 2.6 for searching torrents and grabbing the
 
 <b>Compatible torrent sites<b>
 - https://zooqle.com
-- https://rarbg.to
+- https://nyaa.patsu.cat
 
 <b>Tools:</b>
   - [Scrapy](https://scrapy.org/)

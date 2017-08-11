@@ -13,19 +13,6 @@ class Nyaa(scrapy.Spider):
         #can be a list (like here) or a generator (use yield in that case)
         return [scrapy.Request(url=search, callback=self.parse)]
 
-    # pretty printing
-    def printTorrent(self,torrent):
-        print '\n{'
-        print '\t Title: ' + torrent['title']
-        #print '\t href: ' + torrent['href']
-        print '\t Size: ' + torrent['size']
-        print '\t Category: ' + torrent['category']
-        print '\t Torrent: ' + torrent['torrent']
-        print '\t Magnet: ' + torrent['magnet']
-        #print '\t Seeders: ' + str(torrent['seeders'])
-        #print '\t Leechers: ' + str(torrent['leechers'])
-        print '}\n'
-
     def parse(self, response):
         #xPath rules
         table   = response.xpath('//tbody[@id="torrentListResults"]//tr[contains(@class,"torrent-info")]')
@@ -44,6 +31,7 @@ class Nyaa(scrapy.Spider):
             #peersTuple = peers[i].re(r'.*(\d+).*(\d+)')
 
             obj = {
+                'anime': True,
                 'magnet':   magnet[i].extract(),
                 'torrent':  torrent[i].extract(),
                 #'seeders':  peersTuple[0],
@@ -53,7 +41,5 @@ class Nyaa(scrapy.Spider):
                 'category':    category[i].extract().replace('\n','')
                 #'href' :    self.site + href[i].extract()
             }
-
-            self.printTorrent(obj)
 
             yield obj
