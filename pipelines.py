@@ -15,6 +15,10 @@ class GetScore(object):
     def process_item(self, item, spider):
         return item
 
+class PrintItem(object):
+    def process_item(self, item, spider):
+        print item
+
 # Save all data in file
 class ExportJson(object):
     def open_spider(self, spider):
