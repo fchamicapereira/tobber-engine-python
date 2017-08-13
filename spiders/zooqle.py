@@ -1,4 +1,5 @@
 import scrapy
+from tobber.items import Torrent
 
 class Zooqle(scrapy.Spider):
     name = "zooqle"
@@ -49,14 +50,12 @@ class Zooqle(scrapy.Spider):
             # Seeders : X | Leechers: Y
             peersTuple = peers[i].re(r'.*(\d+).*(\d+)')
 
-            obj = {
-                'magnet':   magnet[i].extract(),
-                'torrent':  self.site + torrent[i].extract(),
-                'seeders':  peersTuple[0],
-                'leechers': peersTuple[1],
-                'size':     size[i].extract(),
-                'title':    prettyTitle,
-                'href' :    self.site + href[i].extract()
-            }
-
-            yield obj
+            yield Torrent(
+                title       = prettyTitle,
+                magnet      = magnet[i].extract(),
+                torrent     = self.site + torrent[i].extract(),
+                size        = size[i].extract().replace('\n',''),
+                seeders     = peersTuple[0],
+                leechers    = peersTuple[1],
+                href        = self.site + href[i].extract()
+            )

@@ -7,18 +7,11 @@
 
 from scrapy.exceptions import DropItem
 import json
+
 # Gives score to torrents according to my tastes
-class PrintItem(object):
-    def process_item(self, item, spider):
-        if spider.name == 'nyaa':
-            print '\n'
-            print 'Title:   \t', item['title']
-            print 'Category:\t', item['category']
-            print 'Size:    \t', item['size']
-            print '\n'
-        return item
 
 class GetScore(object):
+
     def process_item(self, item, spider):
         return item
 
@@ -44,7 +37,8 @@ class GetEnglishAnime(object):
             'audio'
         ]
 
-        if item['anime'] and all(words not in item['category'].lower() for words in avoid):
+        # only anime torrents have a category
+        if 'category' in item and all(words not in item['category'].lower() for words in avoid):
             return item
 
         raise DropItem('Only english translated anime is desirable')

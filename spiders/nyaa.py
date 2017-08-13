@@ -1,4 +1,5 @@
 import scrapy
+from tobber.items import Torrent
 
 class Nyaa(scrapy.Spider):
     name = "nyaa"
@@ -30,16 +31,10 @@ class Nyaa(scrapy.Spider):
             # Seeders : X | Leechers: Y
             #peersTuple = peers[i].re(r'.*(\d+).*(\d+)')
 
-            obj = {
-                'anime': True,
-                'magnet':   magnet[i].extract(),
-                'torrent':  torrent[i].extract(),
-                #'seeders':  peersTuple[0],
-                #'leechers': peersTuple[1],
-                'size':     size[i].extract().replace('\n',''),
-                'title':    title[i].extract().replace('\n',''),
-                'category':    category[i].extract().replace('\n','')
-                #'href' :    self.site + href[i].extract()
-            }
-
-            yield obj
+            yield Torrent(
+                title       = title[i].extract().replace('\n',''),
+                magnet      = magnet[i].extract(),
+                torrent     = torrent[i].extract(),
+                size        = size[i].extract().replace('\n',''),
+                category    = category[i].extract().replace('\n',''),
+            )
