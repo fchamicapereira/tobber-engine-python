@@ -65,10 +65,9 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'tobber.pipelines.GetEnglishAnime':     200,
-    'tobber.pipelines.GetScore':            900,
-    'tobber.pipelines.ExportJson':          950,
-    'tobber.pipelines.PrintItem':           1000,
+    'tobber.pipelines.english_anime.English_anime':     200,
+    'tobber.pipelines.score.Score':                     900,
+    'tobber.pipelines.save.Save':                       950,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
