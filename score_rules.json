@@ -1,0 +1,26 @@
+{
+    "resolution": {
+        "2160p":    2,
+        "1080p":    1.5,
+        "720p":     1,
+        "480p":     0.5
+    },
+
+    "source": {
+        "Remux":    2.5,
+        "Bluray":   2,
+        "Web-dl":   1.5,
+        "Webrip":   1,
+        "HDTV":     0.5
+    },
+
+    "audio": {
+        "FLAC":     1.1,
+        "AAC":      1
+    },
+
+    "encoding": {
+        "HEVC":     3,
+        "h264":     1
+    }
+}

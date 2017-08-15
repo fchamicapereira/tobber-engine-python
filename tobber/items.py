@@ -18,3 +18,4 @@ class Torrent(scrapy.Item):
     seeders     = scrapy.Field()
     leechers    = scrapy.Field()
     properties  = scrapy.Field()
+    score       = scrapy.Field()

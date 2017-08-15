@@ -40,10 +40,10 @@ class Zooqle(scrapy.Spider):
 
             yield Torrent(
                 title       = prettyTitle,
-                magnet      = magnet[i].extract(),
-                torrent     = self.site + torrent[i].extract(),
-                size        = size[i].extract().replace('\n',''),
-                seeders     = peersTuple[0],
-                leechers    = peersTuple[1],
-                href        = self.site + href[i].extract()
+                magnet      = magnet[i].extract().encode('ascii','ignore'),
+                torrent     = self.site + torrent[i].extract().encode('ascii','ignore'),
+                size        = size[i].extract().replace('\n','').encode('ascii','ignore'),
+                seeders     = peersTuple[0].encode('ascii','ignore'),
+                leechers    = peersTuple[1].encode('ascii','ignore'),
+                href        = self.site + href[i].extract().encode('ascii','ignore')
             )

@@ -29,8 +29,8 @@ class Nyaa(scrapy.Spider):
 
             yield Torrent(
                 title       = title[i].extract().replace('\n',''),
-                magnet      = magnet[i].extract(),
-                torrent     = torrent[i].extract(),
-                size        = size[i].extract().replace('\n',''),
-                category    = category[i].extract().replace('\n',''),
+                magnet      = magnet[i].extract().encode('ascii','ignore'),
+                torrent     = torrent[i].extract().encode('ascii','ignore'),
+                size        = size[i].extract().replace('\n','').encode('ascii','ignore'),
+                category    = category[i].extract().replace('\n','').encode('ascii','ignore'),
             )
