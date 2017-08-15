@@ -25,14 +25,13 @@ class Properties(object):
             },
 
             'encoding': {
-                'HEVC':     ['x265','hevc'],
-                'x264':     ['x264']
+                'HEVC':     ['x265','hevc','h265'],
+                'h264':     ['x264','h264']
             }
         }
 
     def process_item(self, item, spider):
         item['properties'] = self.getProperties(item['title'])
-        print item
         return item
 
 

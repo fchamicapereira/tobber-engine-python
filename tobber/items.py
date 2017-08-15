@@ -10,7 +10,6 @@ import scrapy
 
 class Torrent(scrapy.Item):
     title       = scrapy.Field()
-    anime       = scrapy.Field()
     magnet      = scrapy.Field()
     torrent     = scrapy.Field()
     size        = scrapy.Field()
