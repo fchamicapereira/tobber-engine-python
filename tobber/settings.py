@@ -66,6 +66,7 @@ ROBOTSTXT_OBEY = True
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     'tobber.pipelines.english_anime.English_anime':     200,
+    'tobber.pipelines.properties.Properties':           300,
     'tobber.pipelines.score.Score':                     900,
     'tobber.pipelines.save.Save':                       950,
 }

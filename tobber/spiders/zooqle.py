@@ -16,18 +16,6 @@ class Zooqle(scrapy.Spider):
         #can be a list (like here) or a generator (use yield in that case)
         return [scrapy.Request(url=search, callback=self.parse)]
 
-    # pretty printing
-    def printTorrent(self,torrent):
-        print '\n{'
-        print '\t Title: ' + torrent['title']
-        print '\t href: ' + torrent['href']
-        print '\t Torrent: ' + torrent['torrent']
-        print '\t Magnet: ' + torrent['magnet']
-        print '\t Size: ' + torrent['size']
-        print '\t Seeders: ' + str(torrent['seeders'])
-        print '\t Leechers: ' + str(torrent['leechers'])
-        print '}\n'
-
     def parse(self, response):
         #xPath rules
         table   = response.xpath('//table//tr')
