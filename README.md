@@ -7,8 +7,12 @@ Very basic project written in python 2.6 for searching torrents and grabbing the
 - https://nyaa.patsu.cat
 
 <b>Tools:</b>
-  - [Scrapy](https://scrapy.org/)
+- [Scrapy](https://scrapy.org/)
 
-If you can't connect to the websites, change your DNS server.
+## Installation
 
-Run "python igniton.py" to start the program.
+`$pip install -r requirements.txt`
+
+## Starting
+
+`$python ignition.py`
