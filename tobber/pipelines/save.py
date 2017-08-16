@@ -11,6 +11,6 @@ class Save(object):
         self.file.close()
 
     def process_item(self, item, spider):
-        line = json.dumps(dict(item)) + "\n"
+        line = json.dumps(dict(item), indent=4, sort_keys=True)
         self.file.write(line)
         return item

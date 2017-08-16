@@ -68,8 +68,8 @@ ITEM_PIPELINES = {
     'tobber.pipelines.english_anime.English_anime':     200,
     'tobber.pipelines.properties.Properties':           300,
     'tobber.pipelines.score.Score':                     900,
-    'tobber.pipelines.save.Save':                       950,
-    'tobber.pipelines.print.Print':                     960
+    'tobber.pipelines.sort.Sort':                       960
+    #'tobber.pipelines.print.Print':                     970
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

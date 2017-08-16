@@ -1,5 +1,6 @@
 import scrapy
 import json
+import math
 
 class Score(object):
 
@@ -12,10 +13,14 @@ class Score(object):
 
         # get size in bytes
         score = self.getSizeBytes(item['size'])
+        properties = item['properties']
 
-        
+        for key in self.rules:
+            if key in properties:
+                score *= self.rules[key][properties[key]]
 
-        item['score'] = score
+        # just to avoid 1e9 points
+        item['score'] = math.log(score)
 
         return item
 
