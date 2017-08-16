@@ -12,7 +12,8 @@ class Nyaa(scrapy.Spider):
 
         #must return an iterable
         #can be a list (like here) or a generator (use yield in that case)
-        return [scrapy.Request(url=search, callback=self.parse)]
+
+        yield scrapy.Request(url=search, callback=self.parse)
 
     def parse(self, response):
         #xPath rules

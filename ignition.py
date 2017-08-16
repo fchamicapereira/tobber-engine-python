@@ -44,6 +44,6 @@ def sort_and_store():
 
 
 if __name__ == "__main__":
-    subprocess.check_output(['torify', 'scrapy','crawl','zooqle'])
+    subprocess.check_output(['scrapy','crawl','nyaa'])
     if not sort_and_store():
         print '\nERROR --- Couldn\'t scrap the site'
