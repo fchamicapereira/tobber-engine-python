@@ -11,16 +11,15 @@ class Score(object):
 
     def process_item(self, item, spider):
 
-        # get size in bytes
-        score = self.getSizeBytes(item['size'])
+        # get size in bytes and log_10 it
+        score = math.log(self.getSizeBytes(item['size']))
         properties = item['properties']
 
         for key in self.rules:
             if key in properties:
                 score *= self.rules[key][properties[key]]
 
-        # just to avoid 1e9 points
-        item['score'] = math.log(score)
+        item['score'] = score
 
         return item
 

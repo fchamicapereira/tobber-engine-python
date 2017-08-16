@@ -19,7 +19,7 @@ NEWSPIDER_MODULE = 'tobber.spiders'
 #USER_AGENT = 'tobber (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -50,11 +50,11 @@ ROBOTSTXT_OBEY = True
 #    'tobber.middlewares.TobberSpiderMiddleware': 543,
 #}
 
-# Enable or disable downloader middlewares
-# See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'tobber.middlewares.MyCustomDownloaderMiddleware': 543,
-#}
+#This points to your local proxy server that talks to Tor
+HTTP_PROXY = 'http://127.0.0.1:8123'
+DOWNLOADER_MIDDLEWARES = {
+  'tobber.middlewares.ProxyMiddleware': 400
+}
 
 # Enable or disable extensions
 # See http://scrapy.readthedocs.org/en/latest/topics/extensions.html
