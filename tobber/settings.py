@@ -22,12 +22,14 @@ NEWSPIDER_MODULE = 'tobber.spiders'
 ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-#CONCURRENT_REQUESTS = 32
+CONCURRENT_REQUESTS = 1
 
 # Configure a delay for requests for the same website (default: 0)
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-#DOWNLOAD_DELAY = 3
+
+DOWNLOAD_DELAY = 5
+
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
@@ -53,17 +55,10 @@ ROBOTSTXT_OBEY = False
 #This points to your local proxy server that talks to Tor
 HTTP_PROXY = 'http://127.0.0.1:8123'
 
-DOWNLOADER_MIDDLEWARES = {
-    'tobber.middlewares.RandomUserAgentMiddleware': 400,
-    'tobber.middlewares.ProxyMiddleware': 410,
-    'tobber.contrib.downloadermiddleware.useragent.UserAgentMiddleware': None
-    # Disable compression middleware, so the actual HTML pages are cached
-}
+DOWNLOADER_MIDDLEWARES = {}
 
 USER_AGENT_LIST = [
-    'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.36 Safari/535.7',
-    'Mozilla/5.0 (Windows NT 6.2; Win64; x64; rv:16.0) Gecko/16.0 Firefox/16.0',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/534.55.3 (KHTML, like Gecko) Version/5.1.3 Safari/534.53.10'
+    'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0'
 ]
 
 # Enable or disable extensions
@@ -75,7 +70,7 @@ USER_AGENT_LIST = [
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'tobber.pipelines.english_anime.English_anime':     200,
+    #'tobber.pipelines.english_anime.English_anime':     200,
     'tobber.pipelines.properties.Properties':           300,
     'tobber.pipelines.score.Score':                     900,
     'tobber.pipelines.save.Save':                       950,

@@ -1,7 +1,8 @@
 import scrapy
 from tobber.items import Torrent
+from tobber.spiders.spider_init import Spider_init
 
-class Zooqle(scrapy.Spider):
+class Zooqle(Spider_init):
     name = "zooqle"
 
     def start_requests(self):

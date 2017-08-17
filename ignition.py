@@ -1,5 +1,13 @@
-import subprocess
+import scrapy
+from scrapy.crawler import CrawlerProcess
+from scrapy.utils.project import get_project_settings
 import json
+
+from tobber.spiders.nyaa import Nyaa
+from tobber.spiders.zooqle import Zooqle
+
+settings = get_project_settings()
+process = CrawlerProcess(settings)
 
 def print_if_exists(torrent,key, level):
     string = ''
@@ -37,13 +45,16 @@ def sort_and_store():
 
     for i in range(top - 1,-1,-1):
         print '\n------------------------------ PLACE',i + 1,'------------------------------\n'
-        print_compact_torrent(ordered[i])
-        #print json.dumps(ordered[i], indent=4, sort_keys=True)
+        #print_compact_torrent(ordered[i])
+        print json.dumps(ordered[i], indent=4, sort_keys=True)
 
     return True
 
 
 if __name__ == "__main__":
-    subprocess.check_output(['scrapy','crawl','nyaa'])
+
+    process.crawl(Zooqle)
+    process.start()
+
     if not sort_and_store():
         print '\nERROR --- Couldn\'t scrap the site'

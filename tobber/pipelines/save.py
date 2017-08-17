@@ -1,7 +1,6 @@
 import scrapy
 import json
 
-
 # Save all data in file
 class Save(object):
     def open_spider(self, spider):

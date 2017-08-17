@@ -1,7 +1,9 @@
 import scrapy
 from tobber.items import Torrent
+from tobber.spiders.spider_init import Spider_init
 
-class Nyaa(scrapy.Spider):
+
+class Nyaa(Spider_init):
     name = "nyaa"
 
     def start_requests(self):

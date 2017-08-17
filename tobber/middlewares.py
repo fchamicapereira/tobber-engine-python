@@ -5,15 +5,12 @@
 # See documentation in:
 # http://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
-import os
-import random
 from scrapy.conf import settings
 
-class RandomUserAgentMiddleware(object):
+class UserAgentMiddleware(object):
     def process_request(self, request, spider):
-        ua  = random.choice(settings.get('USER_AGENT_LIST'))
-        if ua:
-            request.headers.setdefault('User-Agent', ua)
+        ua  = settings.get('USER_AGENT_LIST')[0]
+        request.headers.setdefault('User-Agent', ua)
 
 class ProxyMiddleware(object):
     def process_request(self, request, spider):
