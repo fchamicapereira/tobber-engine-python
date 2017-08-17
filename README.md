@@ -22,7 +22,7 @@ Using pip:
 
 ## Starting
 
-Run `$python ignition.py ${flags}`, substituting the `${flags}` for the actual flags you want to use:
+Run `$python ignition.py ${flags}`, substituting the `${flags}` for the actual flags you want to use.
 
 To get information about all the program flags:
 
