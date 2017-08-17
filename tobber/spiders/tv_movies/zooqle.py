@@ -8,7 +8,7 @@ class Zooqle(Spider_init):
     def start_requests(self):
         self.site = "https://zooqle.com"
 
-        tvshow = "game of thrones"
+        tvshow = "game of thrones s01"
         sortBySize = "&s=sz&v=t&sd=d"
 
         search = self.site + "/search?q=" + tvshow.replace(' ','%20') + sortBySize

@@ -53,9 +53,9 @@ DOWNLOAD_DELAY = 5
 #}
 
 #This points to your local proxy server that talks to Tor
-HTTP_PROXY = 'http://127.0.0.1:8123'
+#HTTP_PROXY = 'http://127.0.0.1:8123'
 
-DOWNLOADER_MIDDLEWARES = {}
+#DOWNLOADER_MIDDLEWARES = {}
 
 USER_AGENT_LIST = [
     'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0'
