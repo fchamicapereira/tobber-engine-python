@@ -4,31 +4,25 @@ Very basic project written in python 2.7 for searching torrents and grabbing the
 
 It's now torified with tor and polipo.
 
-<b>Compatible torrent sites</b>
-- https://zooqle.com (work in progress)
+## Compatible torrent sites
+- https://zooqle.com
 - https://nyaa.patsu.cat
 
-<b>Tools:</b>
-- [Scrapy](https://scrapy.org/)
-- [Tor](https://www.torproject.org/)
-- [Polipo](https://wiki.archlinux.org/index.php/Polipo)
-
 ## Requirements
-- Python 2.6
+- Python 2.7
 - Pip for easy installation of the other requirements
-- Tor
-- Pilopo
+- Tor (only if you want to torify tobber)
+- Pilopo (only if you want to torify tobber)
 
 ## Installation
+
+Using pip:
 
 `$pip install -r requirements.txt`
 
 ## Starting
 
-Run this command, substituting the `${flags}` for the actual flags you want to use.
-
-`$python ignition.py ${flags}`
-
+Run `$python ignition.py ${flags}`, substituting the `${flags}` for the actual flags you want to use:
 
 To get information about all the program flags:
 
