@@ -1,8 +1,8 @@
 import scrapy
 from tobber.items import Torrent
-from tobber.spiders.spider_init import Spider_init
+from tobber.spiders.indexer import Indexer
 
-class Nyaa(Spider_init):
+class Nyaa(Indexer):
     name = "nyaa"
 
     def start_requests(self):

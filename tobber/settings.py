@@ -53,7 +53,7 @@ DOWNLOAD_DELAY = 5
 #}
 
 #This points to your local proxy server that talks to Tor
-#HTTP_PROXY = 'http://127.0.0.1:8123'
+HTTP_PROXY = 'http://127.0.0.1:8123'
 
 #DOWNLOADER_MIDDLEWARES = {}
 

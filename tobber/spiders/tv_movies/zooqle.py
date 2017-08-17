@@ -1,17 +1,16 @@
 import scrapy
 from tobber.items import Torrent
-from tobber.spiders.spider_init import Spider_init
+from tobber.spiders.indexer import Indexer
 
-class Zooqle(Spider_init):
+class Zooqle(Indexer):
     name = "zooqle"
 
     def start_requests(self):
         self.site = "https://zooqle.com"
 
-        tvshow = "game of thrones s01"
         sortBySize = "&s=sz&v=t&sd=d"
 
-        search = self.site + "/search?q=" + tvshow.replace(' ','%20') + sortBySize
+        search = self.site + "/search?q=" + self.title.replace(' ','%20') + sortBySize
 
         #must return an iterable
         #can be a list (like here) or a generator (use yield in that case)

@@ -1,6 +1,6 @@
-# tobber - A torrent grabber engine
+# tobber - a torrent grabber engine
 
-Very basic project written in python 2.6 for searching torrents and grabbing the torrent file using my own personal tastes.
+Very basic project written in python 2.7 for searching torrents and grabbing the torrent file using my own personal tastes.
 
 It's now torified with tor and polipo.
 
@@ -25,4 +25,11 @@ It's now torified with tor and polipo.
 
 ## Starting
 
-`$python ignition.py`
+Run this command, substituting the `${flags}` for the actual flags you want to use.
+
+`$python ignition.py ${flags}`
+
+
+To get information about all the program flags:
+
+`$python ignition.py -h`

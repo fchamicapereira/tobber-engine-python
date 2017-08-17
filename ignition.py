@@ -1,69 +1,98 @@
 import scrapy
+import json
+import argparse
+
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
-from tobber.spiders.spider_init import Spider_init
-import json
+from tobber.spiders.indexer import Indexer
 
 from tobber.spiders.anime.nyaa import Nyaa
 from tobber.spiders.tv_movies.zooqle import Zooqle
 
-def print_if_exists(torrent,key, level):
-    string = ''
+class Ignition:
 
-    for _ in range(level):
-        string = string + '\t'
+    def __init__(self):
+        args = self.process_args()
+        self.run_crawler(args)
+        self.sort_and_store(args.n[0])
 
-    string = string + key + ':'
+    def print_if_exists(self, torrent, key, level):
+        string = ''
 
-    while len(string) < 15:
-        string = string + ' '
+        for _ in range(level):
+            string = string + '\t'
 
-    if key in torrent:
-        print string + torrent[key]
+        string = string + key + ':'
 
-def print_compact_torrent(torrent):
-    print 'title:      ', torrent['title']
-    print 'size:       ', torrent['size']
-    print 'score:      ', torrent['score']
-    print 'properties:'
+        while len(string) < 15:
+            string = string + ' '
 
-    for key in torrent['properties']:
-        print_if_exists(torrent['properties'],key, 1)
+        if key in torrent:
+            print string + torrent[key]
 
-def sort_and_store(top):
-    with open('torrents.jl') as data_file:
-        torrents = json.load(data_file)['torrents']
+    def print_compact_torrent(self, torrent):
+        print 'title:      ', torrent['title']
+        print 'size:       ', torrent['size']
+        #print 'score:      ', torrent['score']
+        print 'properties:'
 
-    if len(torrents) == 0:
-        return False
+        for key in torrent['properties']:
+            self.print_if_exists(torrent['properties'],key, 1)
 
-    ordered = sorted(torrents, key=lambda torrents: torrents['score'], reverse=True)
+    def sort_and_store(self, n):
 
-    for i in range(top - 1,-1,-1):
-        print '\n------------------------------ PLACE',i + 1,'------------------------------\n'
-        print_compact_torrent(ordered[i])
-        #print json.dumps(ordered[i], indent=4, sort_keys=True)
+        with open('torrents.jl') as data_file:
+            torrents = json.load(data_file)['torrents']
 
-    return True
+        if len(torrents) == 0:
+            return False
 
+        ordered = sorted(torrents, key=lambda torrents: torrents['score'], reverse=True)
+
+        for i in range(n - 1,-1,-1):
+            print '\n------------------------------ PLACE',i + 1,'------------------------------\n'
+            self.print_compact_torrent(ordered[i])
+            #print json.dumps(ordered[i], indent=4, sort_keys=True)
+
+        return True
+
+    def process_args(self):
+
+        # create args logic
+        parser = argparse.ArgumentParser(description='tobber - a torrent grabber engine')
+        parser.add_argument('search', nargs='+', type=str, help="title of the content you want to search")
+        parser.add_argument('-n', nargs=1, type=int, help="amount of torrents I will display", default=5)
+        parser.add_argument('-t', '--torify', action='store_true', help="torify the tobber")
+        parser.add_argument('-a', '--anime', action='store_true', help="use this if searching for anime")
+
+        # parse args and return
+        return parser.parse_args()
+
+    def run_crawler(self, args):
+
+        #join all the search words
+        search = ' '.join(args.search)
+
+        settings = get_project_settings()
+        process = CrawlerProcess(settings)
+
+        if args.torify:
+
+            #torify tobber
+            Indexer.custom_settings = {
+                "DOWNLOADER_MIDDLEWARES": {
+                    'tobber.middlewares.UserAgentMiddleware': 400,
+                    'tobber.middlewares.ProxyMiddleware': 410,
+                    'tobber.contrib.downloadermiddleware.useragent.UserAgentMiddleware': None
+                }
+            }
+
+        process.crawl(Zooqle, title=search)
+        process.start()
+
+
+def main():
+    Ignition()
 
 if __name__ == "__main__":
-
-    settings = get_project_settings()
-    process = CrawlerProcess(settings)
-    
-    if False:
-        Spider_init.custom_settings = {
-            "HTTP_PROXY": 'http://127.0.0.1:8123',
-            "DOWNLOADER_MIDDLEWARES": {
-                'tobber.middlewares.UserAgentMiddleware': 400,
-                'tobber.middlewares.ProxyMiddleware': 410,
-                'tobber.contrib.downloadermiddleware.useragent.UserAgentMiddleware': None
-            }
-        }
-
-    process.crawl(Zooqle)
-    process.start()
-
-    if not sort_and_store(10):
-        print '\nERROR --- Couldn\'t scrap the site'
+    main()
