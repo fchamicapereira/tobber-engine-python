@@ -10,7 +10,7 @@ class Indexer(scrapy.Spider):
 
         self.title = []
 
-        if season != -1:
+        if season > 0:
 
             # search for, for example, "game of thrones season 1" or "game of thrones s01"
             if season < 10:
