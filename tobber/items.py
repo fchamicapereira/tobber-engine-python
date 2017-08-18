@@ -6,7 +6,7 @@
 # http://doc.scrapy.org/en/latest/topics/items.html
 
 import scrapy
-
+import json
 
 class Torrent(scrapy.Item):
     title       = scrapy.Field()

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import scrapy
 import json
 import argparse
@@ -16,30 +18,6 @@ class Ignition:
         self.run_crawler(args)
         self.sort_and_store(args.n)
 
-    def print_if_exists(self, torrent, key, level):
-        string = ''
-
-        for _ in range(level):
-            string = string + '\t'
-
-        string = string + key + ':'
-
-        while len(string) < 15:
-            string = string + ' '
-
-        if key in torrent:
-            print string + torrent[key]
-
-    def print_compact_torrent(self, torrent):
-        print 'title:      ', torrent['title']
-        print 'size:       ', torrent['size']
-        print 'category:   ', torrent['category']
-        #print 'score:      ', torrent['score']
-        print 'properties:'
-
-        for key in torrent['properties']:
-            self.print_if_exists(torrent['properties'],key, 1)
-
     def sort_and_store(self, n):
 
         with open('torrents.jl') as data_file:
@@ -51,9 +29,8 @@ class Ignition:
         ordered = sorted(torrents, key=lambda torrents: torrents['score'], reverse=True)
 
         for i in range(n - 1,-1,-1):
-            print '\n------------------------------ PLACE',i + 1,'------------------------------\n'
-            self.print_compact_torrent(ordered[i])
-            #print json.dumps(ordered[i], indent=4, sort_keys=True)
+            print 'Place: ', i + 1
+            print json.dumps(ordered[i], indent=4, sort_keys=True)
 
         return True
 
