@@ -33,6 +33,7 @@ class Ignition:
     def print_compact_torrent(self, torrent):
         print 'title:      ', torrent['title']
         print 'size:       ', torrent['size']
+        print 'category:   ', torrent['category']
         #print 'score:      ', torrent['score']
         print 'properties:'
 
@@ -92,7 +93,12 @@ class Ignition:
                 }
             }
 
-        process.crawl(Zooqle, title=search, season=args.season)
+        if args.anime:
+            process.crawl(Nyaa, title=search, season=args.season)
+
+        else:
+            process.crawl(Zooqle, title=search, season=args.season)
+
         process.start()
 
 
