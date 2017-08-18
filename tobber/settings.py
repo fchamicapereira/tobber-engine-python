@@ -21,6 +21,9 @@ NEWSPIDER_MODULE = 'tobber.spiders'
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
 
+LOG_FILE = 'tobber.log'
+LOG_ENCODING = 'utf-8'
+
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 CONCURRENT_REQUESTS = 1
 
