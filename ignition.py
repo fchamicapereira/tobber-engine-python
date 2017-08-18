@@ -14,7 +14,7 @@ class Ignition:
     def __init__(self):
         args = self.process_args()
         self.run_crawler(args)
-        self.sort_and_store(args.n[0])
+        self.sort_and_store(args.n)
 
     def print_if_exists(self, torrent, key, level):
         string = ''
@@ -60,8 +60,13 @@ class Ignition:
 
         # create args logic
         parser = argparse.ArgumentParser(description='tobber - a torrent grabber engine')
+
+        # need input
         parser.add_argument('search', nargs='+', type=str, help="title of the content you want to search")
-        parser.add_argument('-n', nargs=1, type=int, help="amount of torrents I will display", default=5)
+        parser.add_argument('-n', type=int, default=5, help="amount of torrents I will display")
+        parser.add_argument('-s', '--season', type=int, default=-1, help="search for entire season")
+
+        # don't need input
         parser.add_argument('-t', '--torify', action='store_true', help="torify the tobber")
         parser.add_argument('-a', '--anime', action='store_true', help="use this if searching for anime")
 
@@ -87,7 +92,7 @@ class Ignition:
                 }
             }
 
-        process.crawl(Zooqle, title=search)
+        process.crawl(Zooqle, title=search, season=args.season)
         process.start()
 
 

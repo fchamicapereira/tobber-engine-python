@@ -7,14 +7,15 @@ class Zooqle(Indexer):
 
     def start_requests(self):
         self.site = "https://zooqle.com"
-
+        urls = []
         sortBySize = "&s=sz&v=t&sd=d"
+        search = self.site + "/search?q="
 
-        search = self.site + "/search?q=" + self.title.replace(' ','%20') + sortBySize
+        for title in self.title:
+            urls.append(search + title + sortBySize)
 
-        #must return an iterable
-        #can be a list (like here) or a generator (use yield in that case)
-        return [scrapy.Request(url=search, callback=self.parse)]
+        for url in urls:
+            yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
         #xPath rules
