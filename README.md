@@ -13,6 +13,7 @@ It's now torified with tor and polipo.
 - Pip for easy installation of the other requirements
 - Tor (only if you want to torify tobber)
 - Pilopo (only if you want to torify tobber)
+- MongoDB
 
 ## Installation
 

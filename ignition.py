@@ -16,31 +16,31 @@ from tobber.spiders.tv_movies.zooqle import Zooqle
 class Ignition:
 
     def __init__(self):
-        args = self.process_args()
-        self.run_crawler(args)
+
+        # getting the settings of the project (settings.py)
+        self.settings = get_project_settings()
+
+        # processing input arguments
+        self.process_args()
+
+        # meeting the arguments with the settings
+        self.change_settings()
+
+        # running the spiders
+        self.run_crawler()
+
+        # open mongo
         self.open_mongo()
-        self.sort(args.n)
+
+        # working with the mongo db
+        self.sort()
         self.dump_collection()
+
+        # close mongo
         self.close_mongo()
 
-    def sort_file(self, n):
-
-        with open('torrents.jl') as data_file:
-            torrents = json.load(data_file)['torrents']
-
-        if len(torrents) == 0:
-            return False
-
-        ordered = sorted(torrents, key=lambda torrents: torrents['score'], reverse=True)
-
-        for i in range(n - 1,-1,-1):
-            print 'Place: ', i + 1
-            print json.dumps(ordered[i], indent=4, sort_keys=True)
-
-        return True
 
     def open_mongo(self):
-        self.settings    = get_project_settings()
         self.client      = pymongo.MongoClient(self.settings['MONGODB_SERVER'], self.settings['MONGODB_PORT'])
         self.db          = self.client[self.settings['MONGODB_DB']]
         self.collection  = self.db[self.settings['MONGODB_COLLECTION']]
@@ -48,19 +48,36 @@ class Ignition:
     def close_mongo(self):
         self.client.close()
 
-    def sort(self, n):
+    def dump_collection(self):
+        self.collection.drop()
+
+    def sort_file(self):
+
+        with open('torrents.jl') as data_file:
+            torrents = json.load(data_file)['torrents']
+
+            if len(torrents) == 0:
+                return False
+
+                ordered = sorted(torrents, key=lambda torrents: torrents['score'], reverse=True)
+
+                for i in range(self.args.n - 1,-1,-1):
+                    print 'Place: ', i + 1
+                    print json.dumps(ordered[i], indent=4, sort_keys=True)
+
+                    return True
+
+    def sort(self):
         result = self.collection.find().sort("score", pymongo.DESCENDING)
 
         counter = 1
         for doc in result:
-            if counter > n:
+            if counter > self.args.n:
                 break
             print '\n\nPlace: ', counter
             pprint(doc, width=-1)
             counter += 1
 
-    def dump_collection(self):
-        self.collection.drop()
 
     def process_args(self):
 
@@ -78,37 +95,34 @@ class Ignition:
         parser.add_argument('-l', '--log', action='store_true', help="show log in stdout")
 
         # parse args and return
-        return parser.parse_args()
+        self.args = parser.parse_args()
 
-    def run_crawler(self, args):
+    def change_settings(self):
 
-        #join all the search words
-        search = ' '.join(args.search)
-
-        settings = get_project_settings()
-        process = CrawlerProcess(settings)
-
-        custom_settings = {}
-
-        if args.torify:
+        if self.args.torify:
 
             #torify tobber
-            custom_settings["DOWNLOADER_MIDDLEWARES"] =  {
-                    'tobber.middlewares.UserAgentMiddleware': 400,
-                    'tobber.middlewares.ProxyMiddleware': 410,
-                    'tobber.contrib.downloadermiddleware.useragent.UserAgentMiddleware': None
+            self.settings["DOWNLOADER_MIDDLEWARES"] =  {
+                'tobber.middlewares.UserAgentMiddleware': 400,
+                'tobber.middlewares.ProxyMiddleware': 410,
+                'tobber.contrib.downloadermiddleware.useragent.UserAgentMiddleware': None
             }
 
-        if args.log == False:
-            custom_settings["LOG_FILE"] = 'tobber.log'
+        if self.args.log == False:
+            self.settings["LOG_FILE"] = 'tobber.log'
 
-        Indexer.custom_settings = custom_settings
 
-        if args.anime:
-            process.crawl(Nyaa, title=search, season=args.season)
+    def run_crawler(self):
+
+        #join all the search words
+        search = ' '.join(self.args.search)
+        process = CrawlerProcess(self.settings)
+
+        if self.args.anime:
+            process.crawl(Nyaa, title=search, season=self.args.season)
 
         else:
-            process.crawl(Zooqle, title=search, season=args.season)
+            process.crawl(Zooqle, title=search, season=self.args.season)
 
         process.start()
 
