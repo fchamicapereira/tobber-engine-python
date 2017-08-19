@@ -57,11 +57,12 @@ class Ignition:
             torrents = json.load(data_file)['torrents']
 
             if len(torrents) == 0:
-                return False
+                print 'No torrents were grabbed :('
+                return
 
                 ordered = sorted(torrents, key=lambda torrents: torrents['score'], reverse=True)
 
-                for i in range(self.args.n - 1,-1,-1):
+                for i in range(self.args.n):
                     print 'Place: ', i + 1
                     print json.dumps(ordered[i], indent=4, sort_keys=True)
 
@@ -77,7 +78,6 @@ class Ignition:
             print '\n\nPlace: ', counter
             pprint(doc, width=-1)
             counter += 1
-
 
     def process_args(self):
 
