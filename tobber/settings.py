@@ -21,9 +21,6 @@ NEWSPIDER_MODULE = 'tobber.spiders'
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
 
-LOG_FILE = 'tobber.log'
-LOG_ENCODING = 'utf-8'
-
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 CONCURRENT_REQUESTS = 1
 
@@ -64,6 +61,11 @@ USER_AGENT_LIST = [
     'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0'
 ]
 
+MONGODB_SERVER = "localhost"
+MONGODB_PORT = 27017
+MONGODB_DB = "tobber"
+MONGODB_COLLECTION = "torrents"
+
 # Enable or disable extensions
 # See http://scrapy.readthedocs.org/en/latest/topics/extensions.html
 #EXTENSIONS = {
@@ -76,7 +78,8 @@ ITEM_PIPELINES = {
     #'tobber.pipelines.english_anime.English_anime':     200,
     'tobber.pipelines.properties.Properties':           300,
     'tobber.pipelines.score.Score':                     900,
-    'tobber.pipelines.save.Save':                       950,
+    #'tobber.pipelines.save.Save':                       950,
+    'tobber.pipelines.mongo.Mongo':                       950,
     #'tobber.pipelines.print.Print':                     970
 }
 

@@ -3,6 +3,8 @@
 import scrapy
 import json
 import argparse
+import pymongo
+from pprint import pprint
 
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
@@ -16,9 +18,12 @@ class Ignition:
     def __init__(self):
         args = self.process_args()
         self.run_crawler(args)
-        self.sort_and_store(args.n)
+        self.open_mongo()
+        self.sort(args.n)
+        self.dump_collection()
+        self.close_mongo()
 
-    def sort_and_store(self, n):
+    def sort_file(self, n):
 
         with open('torrents.jl') as data_file:
             torrents = json.load(data_file)['torrents']
@@ -34,6 +39,29 @@ class Ignition:
 
         return True
 
+    def open_mongo(self):
+        self.settings    = get_project_settings()
+        self.client      = pymongo.MongoClient(self.settings['MONGODB_SERVER'], self.settings['MONGODB_PORT'])
+        self.db          = self.client[self.settings['MONGODB_DB']]
+        self.collection  = self.db[self.settings['MONGODB_COLLECTION']]
+
+    def close_mongo(self):
+        self.client.close()
+
+    def sort(self, n):
+        result = self.collection.find().sort("score", pymongo.DESCENDING)
+
+        counter = 1
+        for doc in result:
+            if counter > n:
+                break
+            print '\n\nPlace: ', counter
+            pprint(doc, width=-1)
+            counter += 1
+
+    def dump_collection(self):
+        self.collection.drop()
+
     def process_args(self):
 
         # create args logic
@@ -47,6 +75,7 @@ class Ignition:
         # don't need input
         parser.add_argument('-t', '--torify', action='store_true', help="torify the tobber")
         parser.add_argument('-a', '--anime', action='store_true', help="use this if searching for anime")
+        parser.add_argument('-l', '--log', action='store_true', help="show log in stdout")
 
         # parse args and return
         return parser.parse_args()
@@ -59,16 +88,21 @@ class Ignition:
         settings = get_project_settings()
         process = CrawlerProcess(settings)
 
+        custom_settings = {}
+
         if args.torify:
 
             #torify tobber
-            Indexer.custom_settings = {
-                "DOWNLOADER_MIDDLEWARES": {
+            custom_settings["DOWNLOADER_MIDDLEWARES"] =  {
                     'tobber.middlewares.UserAgentMiddleware': 400,
                     'tobber.middlewares.ProxyMiddleware': 410,
                     'tobber.contrib.downloadermiddleware.useragent.UserAgentMiddleware': None
-                }
             }
+
+        if args.log == False:
+            custom_settings["LOG_FILE"] = 'tobber.log'
+
+        Indexer.custom_settings = custom_settings
 
         if args.anime:
             process.crawl(Nyaa, title=search, season=args.season)
