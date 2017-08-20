@@ -9,10 +9,10 @@ It's now torified with tor and polipo.
 - https://nyaa.patsu.cat
 
 ## Dependencies
-# Required
+### Required
 - Python 2.7
 
-# Not required
+### Not required
 - Pip for easy installation of the other requirements
 - Tor (only if you want to torify tobber)
 - Pilopo (only if you want to torify tobber)
