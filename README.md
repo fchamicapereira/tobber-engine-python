@@ -38,31 +38,45 @@ All the arguments are optional, except for the "search" argument.
   Output all the possible arguments and how to use them
 
 - search
+
   No tag must be written. It's the only mandatory argument. It'll be all the text that is not followed by a flag.
+  
   ex: `python ignition Game of Thrones` - search = Game of Thrones
 
 - `-n` / `-N`
+  
   Number of torrents you want to see in the end. It requires a number. The default value is 5.
+  
   ex: `python ignition Game of Thrones -n 2`
   
 - `-s` / `--season`
+  
   Number of the season you want to search. It requires a number, and has no default value.
+  
   ex: `python ignition.py Game of Thrones -s 3`
 
 - `-f` / `--file`
+  
   File that will receive all the torrent's information. Must be a path, and end with the extension '.json'. If used, tobber will not use mongodb for storing the information, but instead the file you provided. If just the tag is used but followed by no path, tobber will use the default file (torrents.json in the project path).
+  
   ex: `python ignition.py Game of Thrones -f /home/user/documents/something.json`
 
 - `-t` / `--torify`
+  
   Make tobber use tor and polipo. You must have tor and polipo running in the background.
+  
   ex: `python ignition.py Game of thrones -n 3 -s 1 -t`
   
 - `-a` / `--anime`
+  
   Make tobber search in the anime spiders.
+  
   ex: `python ignition.py One Piece -a`
   
 - `-l` / `--log`
+  
   Output to the console all the information tobber can display, for example connections, requests and debugging information.
+  
   ex: `python ignition.py -l Game of Thrones`
   
   
