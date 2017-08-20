@@ -8,12 +8,15 @@ It's now torified with tor and polipo.
 - https://zooqle.com
 - https://nyaa.patsu.cat
 
-## Requirements
+## Dependencies
+# Required
 - Python 2.7
+
+# Not required
 - Pip for easy installation of the other requirements
 - Tor (only if you want to torify tobber)
 - Pilopo (only if you want to torify tobber)
-- MongoDB
+- MongoDB (only if you want to use mongo database instead of outputing to a file)
 
 ## Installation
 
