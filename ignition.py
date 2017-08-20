@@ -4,14 +4,16 @@ import scrapy
 import json
 import argparse
 import pymongo
+import os
+
 from pprint import pprint
 
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 from tobber.spiders.indexer import Indexer
 
-from tobber.spiders.anime.nyaa import Nyaa
-from tobber.spiders.tv_movies.zooqle import Zooqle
+from tobber.spiders.tv_movies import *
+from tobber.spiders.anime import *
 
 class Ignition:
 
@@ -27,17 +29,24 @@ class Ignition:
         self.change_settings()
 
         # running the spiders
+        print 'Start crawling'
         self.run_crawler()
+        print 'Done!'
+        
+        if self.args.file:
+            self.sort_file()
 
-        # open mongo
-        self.open_mongo()
+        else:
+        
+            # open mongo
+            self.open_mongo()
 
-        # working with the mongo db
-        self.sort()
-        self.dump_collection()
-
-        # close mongo
-        self.close_mongo()
+            # working with the mongo db
+            self.sort()
+            self.dump_collection()
+            
+            # close mongo
+            self.close_mongo()
 
 
     def open_mongo(self):
@@ -53,20 +62,18 @@ class Ignition:
 
     def sort_file(self):
 
-        with open('torrents.jl') as data_file:
+        with open(self.args.file) as data_file:
             torrents = json.load(data_file)['torrents']
 
-            if len(torrents) == 0:
-                print 'No torrents were grabbed :('
-                return
+        if len(torrents) == 0:
+            print 'No torrents were grabbed :('
+            return
 
-                ordered = sorted(torrents, key=lambda torrents: torrents['score'], reverse=True)
+        ordered = sorted(torrents, key=lambda torrents: torrents['score'], reverse=True)
 
-                for i in range(self.args.n):
-                    print 'Place: ', i + 1
-                    print json.dumps(ordered[i], indent=4, sort_keys=True)
-
-                    return True
+        for i in range(self.args.n):
+            print '\nPlace: ', i + 1
+            print json.dumps(ordered[i], indent=4, sort_keys=True)
 
     def sort(self):
         result = self.collection.find().sort("score", pymongo.DESCENDING)
@@ -81,6 +88,8 @@ class Ignition:
 
     def process_args(self):
 
+        torrents_file = os.getcwd() + os.path.sep + 'torrents.json'
+
         # create args logic
         parser = argparse.ArgumentParser(description='tobber - a torrent grabber engine')
 
@@ -88,6 +97,7 @@ class Ignition:
         parser.add_argument('search', nargs='+', type=str, help="title of the content you want to search")
         parser.add_argument('-n', type=int, default=5, help="amount of torrents I will display")
         parser.add_argument('-s', '--season', type=int, default=-1, help="search for entire season")
+        parser.add_argument('-f', '--file', nargs='?', type=str, default=None, const=torrents_file, help="export to file instead of mongo (if path is given, it will use that)")
 
         # don't need input
         parser.add_argument('-t', '--torify', action='store_true', help="torify the tobber")
@@ -98,6 +108,15 @@ class Ignition:
         self.args = parser.parse_args()
 
     def change_settings(self):
+
+        if self.args.file:
+            if self.args.file.split('.')[-1] != 'json':
+                print '---Error in the torrent\'s file name given---'
+                print 'Please give a file instead of a path and make sure it has de .json extension'
+                exit()
+
+            self.settings['ITEM_PIPELINES']['tobber.pipelines.save.Save'] = 950
+            self.settings['ITEM_PIPELINES']['tobber.pipelines.mongo.Mongo'] = None
 
         if self.args.torify:
 
@@ -119,10 +138,10 @@ class Ignition:
         process = CrawlerProcess(self.settings)
 
         if self.args.anime:
-            process.crawl(Nyaa, title=search, season=self.args.season)
+            process.crawl(Nyaa, title=search, season=self.args.season, file=self.args.file)
 
         else:
-            process.crawl(Zooqle, title=search, season=self.args.season)
+            process.crawl(Zooqle, title=search, season=self.args.season, file=self.args.file)
 
         process.start()
 

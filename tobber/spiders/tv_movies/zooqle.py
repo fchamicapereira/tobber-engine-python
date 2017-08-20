@@ -6,6 +6,8 @@ class Zooqle(Indexer):
     name = "zooqle"
 
     def start_requests(self):
+        print 'Zooqle is scrapying...'
+        
         self.site = "https://zooqle.com"
         urls = []
         sortBySize = "&s=sz&v=t&sd=d"

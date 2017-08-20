@@ -1,4 +1,4 @@
 *.pyc
 .git
-torrents.jl
+torrents.json
 tobber.log

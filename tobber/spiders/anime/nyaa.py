@@ -6,6 +6,8 @@ class Nyaa(Indexer):
     name = "nyaa"
 
     def start_requests(self):
+        print 'Nyaa is scrapying...'
+        
         self.site = "https://nyaa.pantsu.cat"
         urls = []
 

@@ -5,7 +5,7 @@ import json
 class Save(object):
     def open_spider(self, spider):
         self.first = True
-        self.file = open('torrents.jl', 'w')
+        self.file = open(spider.file, 'w')
         self.file.write('{ "torrents": [\n')
 
     def close_spider(self, spider):

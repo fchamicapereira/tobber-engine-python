@@ -1,9 +1,11 @@
 import scrapy
 
 class Indexer(scrapy.Spider):
-    def __init__(self, title=None, season=None, *args, **kwargs):
+    def __init__(self, title=None, season=None, file=None, *args, **kwargs):
 
         super(Indexer, self).__init__(*args, **kwargs)
+
+        self.file = file
 
         # title will not be a string, but a list
         # this allows me to make more than 1 request
