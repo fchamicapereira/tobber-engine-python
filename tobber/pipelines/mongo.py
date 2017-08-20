@@ -21,7 +21,15 @@ class Mongo(object):
         )
 
     def open_spider(self, spider):
-        self.client     = pymongo.MongoClient(self.mongo_server, self.mongo_port)
+
+        try:
+            self.client     = pymongo.MongoClient(self.mongo_server, self.mongo_port, serverSelectionTimeoutMS=1)
+            self.client.server_info()
+
+        except pymongo.errors.ServerSelectionTimeoutError as err:
+            print 'Mongo:', err
+            raise scrapy.exceptions.CloseSpider('Can\'t connect to mongo database')
+
         self.db         = self.client[self.mongo_db]
         self.collection = self.db[self.mongo_collection]
 
