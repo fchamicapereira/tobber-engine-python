@@ -28,3 +28,9 @@ Run `$python ignition.py ${flags}`, substituting the `${flags}` for the actual f
 To get information about all the program flags:
 
 `$python ignition.py -h`
+
+## Tweaking
+
+To make your own rules for torrent choosing, edit the 'score_rules.json' file.
+
+Each torrent is given a certain number of points that will give them advantadge against the others. The formula starts by taking the log of the size and add the sum of the properties of the torrent multiplied by the value corresponding to that property. These values are discriminated in the 'score_rules.json' file. By raising the values in some properties, you'll make that group of properties more important than the others.
