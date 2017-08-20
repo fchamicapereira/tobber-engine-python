@@ -15,7 +15,7 @@ It's now torified with tor and polipo.
 ### Not required
 - Pip for easy installation of the other requirements
 - Tor (only if you want to torify tobber)
-- Pilopo (only if you want to torify tobber)
+- Polipo (only if you want to torify tobber)
 - MongoDB (only if you want to use mongo database instead of outputing to a file)
 
 ## Installation
