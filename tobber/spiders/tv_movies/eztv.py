@@ -20,8 +20,6 @@ class Eztv(Indexer):
 
     def parse(self, response):
 
-        print 'Using User-Agent:',response.request.headers['User-Agent']
-
         # xPath rules
         table   = response.xpath('//table//tr[@class="forum_header_border"]')
 

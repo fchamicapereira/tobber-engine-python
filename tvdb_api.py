@@ -60,7 +60,7 @@ class Tvdb_api:
         res = requests.post(query, data=info, headers=header)
 
 
-        print 'New token:'
+        print 'New tvdb api token:'
         print res.json()
 
 
@@ -151,6 +151,8 @@ class Tvdb_api:
         season = 0
         episode = 0
 
+        today = datetime.datetime.today()
+
         for item in data:
 
             # there's not a release date for this episode yet
@@ -159,7 +161,6 @@ class Tvdb_api:
 
             # verify if this episode has already been released or not
             ep_release_date = datetime.datetime.strptime(item['firstAired'],'%Y-%m-%d')
-            today = datetime.datetime.today()
 
             if today < ep_release_date:
                 continue

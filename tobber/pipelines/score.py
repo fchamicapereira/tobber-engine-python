@@ -29,7 +29,7 @@ class Score(object):
         size = size.split(' ')
 
         # get size number
-        sizeBytes = float(size[0])
+        sizeBytes = float(size[0].replace(',',''))
 
         if 'G' in size[1]:
             sizeBytes *= 1e9

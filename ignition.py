@@ -100,7 +100,8 @@ class Ignition:
         parser.add_argument('search', nargs='+', type=str, help="title of the content you want to search")
         parser.add_argument('-n', type=int, default=5, help="amount of torrents I will display")
         parser.add_argument('-s', '--season', type=int, default=-1, help="search for entire season")
-        parser.add_argument('-f', '--file', nargs='?', type=str, default=None, const=torrents_file, help="export to file instead of mongo (if path is given, it will use that)")
+        parser.add_argument('-f', '--file', nargs='?', type=str,
+            default=None, const=torrents_file, help="export to file instead of mongo (if path is given, it will use that)")
 
         # don't need input
         parser.add_argument('-t', '--torify', action='store_true', help="torify the tobber")
@@ -160,6 +161,7 @@ class Ignition:
         else:
             process.crawl(Zooqle, title=self.search, season=self.args.season, file=self.args.file)
             process.crawl(Eztv, title=self.search, season=self.args.season, file=self.args.file)
+            process.crawl(_1337x, title=self.search, season=self.args.season, file=self.args.file)
 
         process.start()
 

@@ -6,6 +6,7 @@ Very basic project written in python 2.7 for searching torrents and grabbing the
 - https://zooqle.com
 - https://nyaa.patsu.cat
 - https://eztv.ag
+- https://1337x.to
 
 ## Dependencies
 
