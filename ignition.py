@@ -15,12 +15,17 @@ from tobber.spiders.indexer import Indexer
 from tobber.spiders.tv_movies import *
 from tobber.spiders.anime import *
 
+from tvdb_api import Tvdb_api
+
 class Ignition:
 
     def __init__(self):
 
         # getting the settings of the project (settings.py)
         self.settings = get_project_settings()
+
+        # getting the tvdb instance
+        self.tvdb = Tvdb_api()
 
         # processing input arguments
         self.process_args()
@@ -101,14 +106,21 @@ class Ignition:
         parser.add_argument('-t', '--torify', action='store_true', help="torify the tobber")
         parser.add_argument('-a', '--anime', action='store_true', help="use this if searching for anime")
         parser.add_argument('-l', '--log', action='store_true', help="show log in stdout")
+        parser.add_argument('-le', '--last-episode', action='store_true', help="get the latest episode aired")
 
         # parse args and return
         self.args = parser.parse_args()
 
     def change_settings(self):
+
+        # join all the search words
+        self.search = ' '.join(self.args.search)
+
+        # using anime tag
         if self.args.anime:
             self.settings['ITEM_PIPELINES']['tobber.pipelines.english_anime.English_anime'] = 200
 
+        # using a file instead of mongodb
         if self.args.file:
             if self.args.file.split('.')[-1] != 'json':
                 print '---Error in the torrent\'s file name given---'
@@ -120,28 +132,34 @@ class Ignition:
         else:
             self.settings['ITEM_PIPELINES']['tobber.pipelines.mongo.Mongo'] = 950
 
+        # torifying
         if self.args.torify:
 
             #torify tobber
             self.settings["DOWNLOADER_MIDDLEWARES"]['tobber.middlewares.ProxyMiddleware'] = 410
             self.settings["DOWNLOADER_MIDDLEWARES"]['tobber.contrib.downloadermiddleware.useragent.UserAgentMiddleware'] = None
 
+        # show log in the stdout instead of log file
         if self.args.log == False:
             self.settings["LOG_FILE"] = 'tobber.log'
+
+        if self.args.last_episode:
+            episode = self.tvdb.getLastEpisode(self.search)
+            self.search = self.search + ' ' + episode
+
+            print 'Searching for ' + self.search
 
 
     def run_crawler(self):
 
-        #join all the search words
-        search = ' '.join(self.args.search)
         process = CrawlerProcess(self.settings)
 
         if self.args.anime:
-            process.crawl(Nyaa, title=search, season=self.args.season, file=self.args.file)
+            process.crawl(Nyaa, title=self.search, season=self.args.season, file=self.args.file)
 
         else:
-            process.crawl(Zooqle, title=search, season=self.args.season, file=self.args.file)
-            process.crawl(Eztv, title=search, season=self.args.season, file=self.args.file)
+            process.crawl(Zooqle, title=self.search, season=self.args.season, file=self.args.file)
+            process.crawl(Eztv, title=self.search, season=self.args.season, file=self.args.file)
 
         process.start()
 

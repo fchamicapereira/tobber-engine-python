@@ -2,6 +2,7 @@
 
 import requests
 import json
+import datetime
 
 class Tvdb_api:
     def __init__(self):
@@ -144,10 +145,47 @@ class Tvdb_api:
     def getLastEpisode(self, name):
 
         # get ID
-        try:
-            info = self.getSeriesInfo(name)
-
-        except ValueError:
-            raise ValueError
+        info = self.getSeriesInfo(name)
 
         data = info['data']
+        season = 0
+        episode = 0
+
+        for item in data:
+
+            # there's not a release date for this episode yet
+            if len(item['firstAired']) == 0:
+                continue
+
+            # verify if this episode has already been released or not
+            ep_release_date = datetime.datetime.strptime(item['firstAired'],'%Y-%m-%d')
+            today = datetime.datetime.today()
+
+            if today < ep_release_date:
+                continue
+
+            # get the latest season
+            if item['airedSeason'] > season:
+                season = item['airedSeason']
+                episode = item['airedEpisodeNumber']
+                continue
+
+            #get the latest episode
+            if item['airedEpisodeNumber'] > episode and item['airedSeason'] == season:
+                episode = item['airedEpisodeNumber']
+
+        if season < 10:
+            wanted = 's0'
+        else:
+            wanted = 's'
+
+        wanted += str(season)
+
+        if episode < 10:
+            wanted += 'e0'
+        else:
+            wanted += 'e'
+
+        wanted += str(episode)
+
+        return wanted
