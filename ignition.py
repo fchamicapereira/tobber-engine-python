@@ -29,9 +29,7 @@ class Ignition:
         self.change_settings()
 
         # running the spiders
-        print 'Start crawling'
         self.run_crawler()
-        print 'Done!'
 
         if self.args.file:
             self.sort_file()
@@ -83,7 +81,7 @@ class Ignition:
             if counter > self.args.n:
                 break
             print '\n\nPlace: ', counter
-            pprint(doc, width=-1)
+            pprint(doc, indent=2, width=-1)
             counter += 1
 
     def process_args(self):
