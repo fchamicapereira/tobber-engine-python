@@ -86,7 +86,7 @@ All the arguments are optional, except for the "search" argument.
 
 - `-le` / `--last-episode`
 
-    Getting the latest episode aired of the content inserted in the search field.
+    Getting the latest aired episode of the content inserted in the search field.
 
     `python ignition.py -le Game of Thrones`
 
