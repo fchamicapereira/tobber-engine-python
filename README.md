@@ -8,10 +8,13 @@ Very basic project written in python 2.7 for searching torrents and grabbing the
 - https://eztv.ag
 
 ## Dependencies
+
 ### Required
+
 - Python 2.7
 
 ### Not required
+
 - Pip for easy installation of the other requirements
 - Tor (only if you want to torify tobber)
 - Polipo (only if you want to torify tobber)
@@ -35,7 +38,8 @@ To get information about all the program flags:
 
 All the arguments are optional, except for the "search" argument.
 
-- "-h" / "--help"
+- `-h` / `--help`
+
   Output all the possible arguments and how to use them
 
 - search
