@@ -7,7 +7,7 @@ class Nyaa(Indexer):
 
     def start_requests(self):
         print 'Nyaa is scrapying...'
-        
+
         self.site = "https://nyaa.pantsu.cat"
         urls = []
 
@@ -36,4 +36,5 @@ class Nyaa(Indexer):
                 torrent     = torrent[i].extract().encode('ascii','ignore'),
                 size        = size[i].extract().replace('\n','').encode('ascii','ignore'),
                 category    = category[i].extract().replace('\n','').encode('ascii','ignore'),
+                site        = self.name
             )

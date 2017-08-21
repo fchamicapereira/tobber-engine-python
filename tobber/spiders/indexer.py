@@ -25,4 +25,4 @@ class Indexer(scrapy.Spider):
                 self.title.append((title + k + str(season)).replace(' ','%20'))
 
         else:
-            self.title.append(title)
+            self.title.append(title.replace(' ','%20'))

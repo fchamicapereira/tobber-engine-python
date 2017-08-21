@@ -32,19 +32,19 @@ class Ignition:
         print 'Start crawling'
         self.run_crawler()
         print 'Done!'
-        
+
         if self.args.file:
             self.sort_file()
 
         else:
-        
+
             # open mongo
             self.open_mongo()
 
             # working with the mongo db
             self.sort()
             self.dump_collection()
-            
+
             # close mongo
             self.close_mongo()
 
@@ -108,6 +108,8 @@ class Ignition:
         self.args = parser.parse_args()
 
     def change_settings(self):
+        if self.args.anime:
+            self.settings['ITEM_PIPELINES']['tobber.pipelines.english_anime.English_anime'] = 200
 
         if self.args.file:
             if self.args.file.split('.')[-1] != 'json':
@@ -116,16 +118,15 @@ class Ignition:
                 exit()
 
             self.settings['ITEM_PIPELINES']['tobber.pipelines.save.Save'] = 950
-            self.settings['ITEM_PIPELINES']['tobber.pipelines.mongo.Mongo'] = None
+
+        else:
+            self.settings['ITEM_PIPELINES']['tobber.pipelines.mongo.Mongo'] = 950
 
         if self.args.torify:
 
             #torify tobber
-            self.settings["DOWNLOADER_MIDDLEWARES"] =  {
-                'tobber.middlewares.UserAgentMiddleware': 400,
-                'tobber.middlewares.ProxyMiddleware': 410,
-                'tobber.contrib.downloadermiddleware.useragent.UserAgentMiddleware': None
-            }
+            self.settings["DOWNLOADER_MIDDLEWARES"]['tobber.middlewares.ProxyMiddleware'] = 410
+            self.settings["DOWNLOADER_MIDDLEWARES"]['tobber.contrib.downloadermiddleware.useragent.UserAgentMiddleware'] = None
 
         if self.args.log == False:
             self.settings["LOG_FILE"] = 'tobber.log'
@@ -142,6 +143,7 @@ class Ignition:
 
         else:
             process.crawl(Zooqle, title=search, season=self.args.season, file=self.args.file)
+            process.crawl(Eztv, title=search, season=self.args.season, file=self.args.file)
 
         process.start()
 

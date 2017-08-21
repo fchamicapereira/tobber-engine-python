@@ -49,13 +49,16 @@ DOWNLOAD_DELAY = 5
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'tobber.middlewares.TobberSpiderMiddleware': 543,
+
 #}
 
 #This points to your local proxy server that talks to Tor
 HTTP_PROXY = 'http://127.0.0.1:8123'
 
-#DOWNLOADER_MIDDLEWARES = {}
+DOWNLOADER_MIDDLEWARES = {
+    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+    'scrapy_fake_useragent.middleware.RandomUserAgentMiddleware': 400,
+}
 
 USER_AGENT_LIST = [
     'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0'
@@ -75,12 +78,8 @@ MONGODB_COLLECTION = "torrents"
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    #'tobber.pipelines.english_anime.English_anime':     200,
     'tobber.pipelines.properties.Properties':           300,
     'tobber.pipelines.score.Score':                     900,
-    #'tobber.pipelines.save.Save':                       950,
-    'tobber.pipelines.mongo.Mongo':                       950,
-    #'tobber.pipelines.print.Print':                     970
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
