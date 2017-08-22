@@ -6,13 +6,16 @@ import datetime
 
 class Tvdb_api:
     def __init__(self):
-        with open('tvdb_api.config') as api_file:
+        self.config = 'tvdb_api.config'
+
+        with open(self.config) as api_file:
             self.api = json.load(api_file)
             self.headers = {
                 "Content-Type":     "application/json",
                 "Accept":           "application/json",
                 "Authorization":    "Bearer " + self.api['token']
             }
+
             self.apiMsg = "ERROR: Not a valid request.\n"
             self.updateToken = "Error in the request. Requesting new token\n"
 
@@ -23,21 +26,25 @@ class Tvdb_api:
 
         if res.status_code not in [200, 401]:
             print self.apiMsg
-            raise ValueError
+            exit()
 
         if res.status_code != 401:
-            return res
+            return res.json()
 
         if self.req_new_token() != 401:
+            print '[TVDB] Requesting a new token'
             res = requests.get(query, headers=self.headers)
 
             if res.status_code not in [200, 401]:
                 print self.apiMsg
-                raise ValueError
+                exit()
 
-            return res
+            return res.json()
 
         print 'Couldn\'t refresh the token. Making request to the /login page for a new token'
+        self.authenticate()
+
+        return requests.get(query, headers=self.headers).json()
 
 
     def authenticate(self):
@@ -45,24 +52,18 @@ class Tvdb_api:
         # {api}/login
         query = self.api['site'] + '/login'
 
-        info = {
-            "apikey":   self.api['apikey'],
-            "username": self.api['username'],
-            "userkey":  self.api['userkey']
-        }
+        data = json.dumps({
+            "apikey": self.api['apikey'].encode('utf-8'),
+            "userkey": self.api['userkey'].encode('utf-8'),
+            "username": self.api['username'].encode('utf-8')
+        })
 
         header = {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
+            "Content-Type": "application/json"
         }
 
         # make request
-        res = requests.post(query, data=info, headers=header)
-
-
-        print 'New tvdb api token:'
-        print res.json()
-
+        res = requests.post(query, data=data, headers=header)
 
         if res.status_code == 401:
             print 'ERROR: Couldn\'t ask for a new token in the /login route'
@@ -71,11 +72,10 @@ class Tvdb_api:
         self.api['token'] = res.json()['token']
 
         # store the new token in the tvdb_api.config
-        with open('tbdv_api.config') as api_file:
-            json.dump(self.api, api_file)
+        with open(self.config, 'w') as api_file:
+            json.dump(self.api, api_file, indent=4)
 
-        print '\nMust update tvdb user page to accept this token'
-        exit()
+        print 'New tvdb api token:', res.json()['token']
 
 
     def req_new_token(self):
@@ -86,15 +86,13 @@ class Tvdb_api:
         # make request
         res = requests.get(query, headers=self.headers)
 
-        if res.status_code == 401:
-            return res.status_code
+        if res.status_code != 401:
+            self.api['token'] = res.json()['token']
+            self.headers['Authorization'] = 'Bearer ' + res.json()['token']
 
-        self.api['token'] = res.json()['token']
-        self.headers['Authorization'] = 'Bearer ' + res.json()['token']
-
-        # store the new token in the tvdb_api.config
-        with open('tbdv_api.config') as api_file:
-            json.dump(self.api, api_file)
+            # store the new token in the tvdb_api.config
+            with open(self.config, 'w') as api_file:
+                json.dump(self.api, api_file, indent=4)
 
         return res.status_code
 
@@ -104,10 +102,8 @@ class Tvdb_api:
         query = self.api['site'] + '/search/series?name=' + name.replace(' ','%20')
 
         # make request
-        res = self.make_req(query)
-
         # take the id of the first one (dirty, I know)
-        return res.json()['data'][0]['id']
+        return  self.make_req(query)['data'][0]['id']
 
     def getSeriesInfo(self,name):
 
@@ -118,13 +114,7 @@ class Tvdb_api:
         query = self.api['site'] + '/series/' + seriesID + '/episodes'
 
         # make request
-        res = self.make_req(query)
-
-        if res.status_code not in [200, 401]:
-            print "[getSeriesID] " + self.apiMsg
-            raise ValueError
-
-        return res.json()
+        return self.make_req(query)
 
     def countEpisodesOfSeason(self,name,season):
 
@@ -148,6 +138,7 @@ class Tvdb_api:
         info = self.getSeriesInfo(name)
 
         data = info['data']
+
         season = 0
         episode = 0
 

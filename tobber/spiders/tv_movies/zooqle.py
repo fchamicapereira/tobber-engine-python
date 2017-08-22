@@ -22,12 +22,12 @@ class Zooqle(Indexer):
     def parse(self, response):
         #xPath rules
         table   = response.xpath('//table//tr')
-        title   = table.xpath('//td[contains(@class,"text-trunc text-nowrap")]//a[contains(@class," small")]')
-        href    = title.xpath('//td//a[@class=" small"]/@href')
-        peers   = table.xpath('//td//div[contains(@class,"progress prog")]/@title')
-        magnet  = table.xpath('//td//a[@title="Magnet link"]/@href')
-        torrent = table.xpath('//td//a[@title="Generate .torrent"]/@href')
-        size    = table.xpath('//td//div[@class="progress prog prog-narrow trans90"]//div[@class="progress-bar prog-blue prog-l"]/text()')
+        title   = table.xpath('./td[contains(@class,"text-trunc text-nowrap")]//a[contains(@class," small")]')
+        href    = table.xpath('./td//a[@class=" small"]/@href')
+        peers   = table.xpath('./td//div[contains(@class,"progress prog")]/@title')
+        magnet  = table.xpath('./td//a[@title="Magnet link"]/@href')
+        torrent = table.xpath('./td//a[@title="Generate .torrent"]/@href')
+        size    = table.xpath('./td//div[@class="progress prog prog-narrow trans90"]//div[@class="progress-bar prog-blue prog-l"]/text()')
 
         for i in range(len(table)):
 
@@ -39,7 +39,7 @@ class Zooqle(Indexer):
             prettyTitle = prettyTitle.replace('<hl>','').replace('</hl>','')
 
             # Seeders : X | Leechers: Y
-            peersTuple = peers[i].re(r'.*(\d+).*(\d+)')
+            peersTuple = peers[i].re(r'(\d+).* (\d+)')
 
             yield Torrent(
                 title       = prettyTitle,
