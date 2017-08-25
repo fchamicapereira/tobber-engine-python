@@ -14,6 +14,9 @@ BOT_NAME = 'tobber'
 SPIDER_MODULES = ['tobber.spiders']
 NEWSPIDER_MODULE = 'tobber.spiders'
 
+# TVDB api config file
+TVDB_API_CONFIG = './tvdb_api.config'
+
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'tobber (+http://www.yourdomain.com)'

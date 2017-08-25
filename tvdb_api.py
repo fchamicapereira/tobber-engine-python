@@ -5,8 +5,8 @@ import json
 import datetime
 
 class Tvdb_api:
-    def __init__(self):
-        self.config = 'tvdb_api.config'
+    def __init__(self, config):
+        self.config = config
 
         with open(self.config) as api_file:
             self.api = json.load(api_file)

@@ -25,7 +25,7 @@ class Ignition:
         self.settings = get_project_settings()
 
         # getting the tvdb instance
-        self.tvdb = Tvdb_api()
+        self.tvdb = Tvdb_api(self.settings['TVDB_API_CONFIG'])
 
         # processing input arguments
         self.process_args()
@@ -156,11 +156,11 @@ class Ignition:
         process = CrawlerProcess(self.settings)
 
         if self.args.anime:
-            process.crawl(Nyaa, title=self.search, season=self.args.season, file=self.args.file)
+            process.crawl(Nyaa,  title=self.search, season=self.args.season, file=self.args.file)
 
         else:
             process.crawl(Zooqle, title=self.search, season=self.args.season, file=self.args.file)
-            #process.crawl(Eztv, title=self.search, season=self.args.season, file=self.args.file)
+            process.crawl(Eztv,   title=self.search, season=self.args.season, file=self.args.file)
             #process.crawl(_1337x, title=self.search, season=self.args.season, file=self.args.file)
 
         process.start()
