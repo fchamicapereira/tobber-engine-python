@@ -6,6 +6,8 @@ import datetime
 
 class Tvdb_api:
     def __init__(self, config):
+
+        # path to config file
         self.config = config
 
         with open(self.config) as api_file:
