@@ -17,7 +17,7 @@ class Tvdb_api:
             }
 
             self.apiMsg = "[TVDB] ERROR: Not a valid request.\n"
-            self.updateToken = "[TVDB] Error in the request. Requesting new token\n"
+            self.updateTokenMsg = "[TVDB] Requesting new token\n"
 
     def make_req(self, query):
 
@@ -32,7 +32,7 @@ class Tvdb_api:
             return res.json()
 
         if self.req_new_token() != 401:
-            print '[TVDB] Requesting a new token'
+            print self.updateTokenMsg
             res = requests.get(query, headers=self.headers)
 
             if res.status_code not in [200, 401]:
@@ -81,7 +81,7 @@ class Tvdb_api:
         res = requests.get(query, headers=self.headers)
 
         if res.status_code != 401:
-            self.updateToken(res.json()['token'])
+            self.update_token(res.json()['token'])
 
         return res.status_code
 
