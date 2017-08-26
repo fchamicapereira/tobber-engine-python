@@ -16,8 +16,8 @@ class Tvdb_api:
                 "Authorization":    "Bearer " + self.api['token']
             }
 
-            self.apiMsg = "ERROR: Not a valid request.\n"
-            self.updateToken = "Error in the request. Requesting new token\n"
+            self.apiMsg = "[TVDB] ERROR: Not a valid request.\n"
+            self.updateToken = "[TVDB] Error in the request. Requesting new token\n"
 
     def make_req(self, query):
 
@@ -41,7 +41,7 @@ class Tvdb_api:
 
             return res.json()
 
-        print 'Couldn\'t refresh the token. Making request to the /login page for a new token'
+        print '[TVDB] Couldn\'t refresh the token. Making request to the /login page for a new token'
         self.authenticate()
 
         return requests.get(query, headers=self.headers).json()
@@ -66,17 +66,11 @@ class Tvdb_api:
         res = requests.post(query, data=data, headers=header)
 
         if res.status_code == 401:
-            print 'ERROR: Couldn\'t ask for a new token in the /login route'
+            print '[TVDB] ERROR: Couldn\'t ask for a new token in the /login route'
             exit()
 
-        self.api['token'] = res.json()['token']
-
-        # store the new token in the tvdb_api.config
-        with open(self.config, 'w') as api_file:
-            json.dump(self.api, api_file, indent=4)
-
-        print 'New tvdb api token:', res.json()['token']
-
+        # updating token
+        self.update_token(res.json()['token'])
 
     def req_new_token(self):
 
@@ -87,14 +81,17 @@ class Tvdb_api:
         res = requests.get(query, headers=self.headers)
 
         if res.status_code != 401:
-            self.api['token'] = res.json()['token']
-            self.headers['Authorization'] = 'Bearer ' + res.json()['token']
-
-            # store the new token in the tvdb_api.config
-            with open(self.config, 'w') as api_file:
-                json.dump(self.api, api_file, indent=4)
+            self.updateToken(res.json()['token'])
 
         return res.status_code
+
+    def update_token(self, token):
+        self.api['token'] = token
+        self.headers['Authorization'] = 'Bearer ' + token
+
+        # store the new token in the tvdb_api.config
+        with open(self.config, 'w') as api_file:
+            json.dump(self.api, api_file, indent=4)
 
     def getSeriesID(self,name):
 
@@ -103,7 +100,7 @@ class Tvdb_api:
 
         # make request
         # take the id of the first one (dirty, I know)
-        return  self.make_req(query)['data'][0]['id']
+        return self.make_req(query)['data'][0]['id']
 
     def getSeriesInfo(self,name):
 

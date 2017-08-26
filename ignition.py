@@ -33,6 +33,11 @@ class Ignition:
         # meeting the arguments with the settings
         self.change_settings()
 
+        # open mongo here just to check if mongod service is running
+        # if it isn't, might as well not start crawling
+        if self.args.file == None:
+            self.open_mongo()
+
         # running the spiders
         self.run_crawler()
 
@@ -40,9 +45,6 @@ class Ignition:
             self.sort_file()
 
         else:
-
-            # open mongo
-            self.open_mongo()
 
             # working with the mongo db
             self.sort()
@@ -53,9 +55,24 @@ class Ignition:
 
 
     def open_mongo(self):
-        self.client      = pymongo.MongoClient(self.settings['MONGODB_SERVER'], self.settings['MONGODB_PORT'])
-        self.db          = self.client[self.settings['MONGODB_DB']]
-        self.collection  = self.db[self.settings['MONGODB_COLLECTION']]
+        HOST = self.settings['MONGODB_SERVER']
+        PORT = self.settings['MONGODB_PORT']
+
+        #timeout to 2 seconds
+        TIMEOUT = 2
+
+        try:
+            self.client      = pymongo.MongoClient(host=HOST, port=PORT,serverSelectionTimeoutMS=TIMEOUT)
+            self.db          = self.client[self.settings['MONGODB_DB']]
+            self.collection  = self.db[self.settings['MONGODB_COLLECTION']]
+            self.client.server_info()
+
+        except pymongo.errors.ServerSelectionTimeoutError:
+            print 'Mongod service is not running.'
+            print 'If you don\'t want to use the mongo database, use the -f tag.'
+            print 'Closing tobber.'
+            exit()
+
 
     def close_mongo(self):
         self.client.close()
