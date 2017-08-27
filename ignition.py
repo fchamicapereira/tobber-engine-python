@@ -46,9 +46,11 @@ class Ignition:
 
         else:
 
-            # working with the mongo db
-            self.sort()
-            self.dump_collection()
+            if self.args.server == False:
+
+                # working with the mongo db
+                self.sort()
+                self.dump_collection()
 
             # close mongo
             self.close_mongo()
@@ -125,6 +127,7 @@ class Ignition:
         parser.add_argument('-a', '--anime', action='store_true', help="use this if searching for anime")
         parser.add_argument('-l', '--log', action='store_true', help="show log in stdout")
         parser.add_argument('-le', '--last-episode', action='store_true', help="get the latest episode aired")
+        parser.add_argument('--server', action='store_true', help="run in server mode")
 
         # parse args and return
         self.args = parser.parse_args()
