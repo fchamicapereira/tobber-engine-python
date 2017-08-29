@@ -101,8 +101,21 @@ class Tvdb_api:
         query = self.api['site'] + '/search/series?name=' + name.replace(' ','%20')
 
         # make request
-        # take the id of the first one (dirty, I know)
-        return self.make_req(query)['data'][0]['id']
+        data = self.make_req(query)['data']
+
+        if len(data) == 0:
+            print 'Show not found'
+            exit()
+
+        if len(data) == 1:
+            return data[0]['id']
+
+        # grab the one that is still going on
+        for show in data:
+            if show['status'] == 'Continuing':
+                return show['id']
+
+        return data[0]['id']
 
     def getSeriesInfo(self,name):
 
