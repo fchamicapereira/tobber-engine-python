@@ -29,7 +29,7 @@ class Zooqle(Indexer):
         torrent = table.xpath('./td//a[@title="Generate .torrent"]/@href')
         size    = table.xpath('./td//div[@class="progress prog prog-narrow trans90"]//div[@class="progress-bar prog-blue prog-l"]/text()')
 
-        for i in range(len(table)):
+        for i in range(len(torrent)):
 
             # this is a hack
             # the title's text comes with <hl> tags that are

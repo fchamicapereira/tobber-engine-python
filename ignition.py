@@ -37,6 +37,7 @@ class Ignition:
         # if it isn't, might as well not start crawling
         if self.args.file == None:
             self.open_mongo()
+            self.dump_collection()
 
         # running the spiders
         self.run_crawler()
@@ -50,7 +51,6 @@ class Ignition:
 
                 # working with the mongo db
                 self.sort()
-                self.dump_collection()
 
             # close mongo
             self.close_mongo()

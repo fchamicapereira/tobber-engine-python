@@ -23,7 +23,7 @@ class Mongo(object):
     def open_spider(self, spider):
 
         try:
-            self.client     = pymongo.MongoClient(self.mongo_server, self.mongo_port, serverSelectionTimeoutMS=1)
+            self.client = pymongo.MongoClient(self.mongo_server, self.mongo_port, serverSelectionTimeoutMS=5)
             self.client.server_info()
 
         except pymongo.errors.ServerSelectionTimeoutError as err:

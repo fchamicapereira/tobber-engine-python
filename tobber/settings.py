@@ -81,8 +81,9 @@ MONGODB_COLLECTION = "torrents"
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
+    'tobber.pipelines.check_search.Check_search':       50,
     'tobber.pipelines.properties.Properties':           300,
-    'tobber.pipelines.score.Score':                     900,
+    'tobber.pipelines.score.Score':                     900
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
