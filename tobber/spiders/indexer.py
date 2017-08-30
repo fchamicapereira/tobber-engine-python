@@ -26,3 +26,8 @@ class Indexer(scrapy.Spider):
 
         else:
             self.title.append(title.replace(' ','%20'))
+
+    def extract_data(self, arr):
+        if len(arr) > 0:
+            return arr.extract()[0].encode('ascii', 'ignore')
+        return None

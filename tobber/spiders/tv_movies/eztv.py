@@ -23,16 +23,15 @@ class Eztv(Indexer):
         # xPath rules
         table   = response.xpath('//table//tr[@class="forum_header_border"]')
 
-        for row in range(len(table)):
+        for row in table:
+            items = row.xpath('./td')
 
-            items = table[row].xpath('./td')
-
-            title   = items[1].xpath('./a[@class="epinfo"]/text()').extract()[0].encode('ascii', 'ignore')
-            href    = self.site + items[1].xpath('./a[@class="epinfo"]/@href').extract()[0].encode('ascii', 'ignore')
-            seeders = items[5].xpath('./font/text()').extract()[0].encode('ascii', 'ignore')
-            magnet  = items[2].xpath('./a[@class="magnet"]/@href').extract()[0].encode('ascii', 'ignore')
-            torrent = items[2].xpath('./a[@class="download_1"]/@href').extract()[0].encode('ascii', 'ignore')
-            size    = items[3].xpath('./text()').extract()[0].encode('ascii', 'ignore')
+            title   = self.extract_data(items[1].xpath('./a[@class="epinfo"]/text()'))
+            href    = self.site + self.extract_data(items[1].xpath('./a[@class="epinfo"]/@href'))
+            seeders = self.extract_data(items[5].xpath('./font/text()'))
+            magnet  = self.extract_data(items[2].xpath('./a[@class="magnet"]/@href'))
+            torrent = self.extract_data(items[2].xpath('./a[@class="download_1"]/@href'))
+            size    = self.extract_data(items[3].xpath('./text()'))
 
             yield Torrent(
                 title       = title,

@@ -181,7 +181,7 @@ class Ignition:
         else:
             process.crawl(Zooqle, title=self.search, season=self.args.season, file=self.args.file)
             process.crawl(Eztv,   title=self.search, season=self.args.season, file=self.args.file)
-            #process.crawl(_1337x, title=self.search, season=self.args.season, file=self.args.file)
+            process.crawl(_1337x, title=self.search, season=self.args.season, file=self.args.file)
 
         process.start()
 

@@ -23,13 +23,13 @@ class Zooqle(Indexer):
         #xPath rules
         table   = response.xpath('//table//tr')
         title   = table.xpath('./td[contains(@class,"text-trunc text-nowrap")]//a[contains(@class," small")]')
-        href    = table.xpath('./td//a[@class=" small"]/@href')
+        href    = title.xpath('./@href')
         peers   = table.xpath('./td//div[contains(@class,"progress prog")]/@title')
         magnet  = table.xpath('./td//a[@title="Magnet link"]/@href')
         torrent = table.xpath('./td//a[@title="Generate .torrent"]/@href')
-        size    = table.xpath('./td//div[@class="progress prog prog-narrow trans90"]//div[@class="progress-bar prog-blue prog-l"]/text()')
+        size    = table.xpath('./td//div[contains(@class,"progress prog prog-narrow")]//div[@class="progress-bar prog-blue prog-l"]/text()')
 
-        for i in range(len(torrent)):
+        for i in range(len(title)):
 
             # this is a hack
             # the title's text comes with <hl> tags that are

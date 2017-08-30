@@ -32,11 +32,12 @@ class _1337x(Indexer):
         table    = response.xpath('//table[@class="table-list table table-responsive table-striped"]//tbody//tr')
         title    = table.xpath('//td[@class="coll-1 name"]//a[not (@class="icon")]/text()')
         href     = table.xpath('//td[@class="coll-1 name"]//a[not (@class="icon")]/@href')
-        seeders  = table.xpath('//td[@class="coll-2 seeds"]/text()')
-        leechers = table.xpath('//td[@class="coll-3 leeches"]/text()')
-        size     = table.xpath('//td[@class="coll-4 size mob-vip"]/text()')
+        seeders  = table.xpath('//td[contains(@class,"coll-2 seeds")]/text()')
+        leechers = table.xpath('//td[contains(@class,"coll-3 leeches"]/text()')
+        size     = table.xpath('//td[contains(@class,"coll-4 size")]/text()')
 
         for i in range(len(table)):
+
             torrent_site = self.site + href[i].extract().encode('ascii','ignore')
 
             data = {
@@ -47,7 +48,18 @@ class _1337x(Indexer):
                 "size":     size[i].extract().encode('ascii','ignore')
             }
 
-            yield scrapy.Request(url=torrent_site, callback=self.parse_torrent_page,meta={'data': data})
+            # decided to not use this method (commented below), it increased the crawling time by A LOT
+            # so now i dont get the magnet and torrent for this indexer
+            # yield scrapy.Request(url=torrent_site, callback=self.parse_torrent_page,meta={'data': data})
+
+            yield Torrent(
+                title       = data['title'],
+                size        = data['size'],
+                seeders     = data['seeders'],
+                leechers    = data['leechers'],
+                href        = data['href'],
+                site        = self.name
+            )
 
     def parse_torrent_page(self, response):
 
@@ -55,7 +67,7 @@ class _1337x(Indexer):
 
         response = response.xpath('//div[@class="col-9 page-content"]//div//div//div//ul//li//a/@href').extract()
 
-        return Torrent(
+        yield Torrent(
             title       = data['title'],
             magnet      = response[0],
             torrent     = response[2],
