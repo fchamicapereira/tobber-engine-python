@@ -7,30 +7,25 @@ class Check_search(object):
     def process_item(self, item, spider):
 
         found = False
-        separators = ['%20', '_', '.', '-', '+']
+        separators = ['%20', '_', '.', '-', '+', '(', ')']
         title = item['title'].lower()
-        spider_title = [w.replace('%20', ' ') for w in spider.title]
+        spider_title = [w.replace('%20', ' ').split(' ') for w in spider.title]
 
         for s in separators:
             title = title.replace(s,' ')
 
         for search in spider_title:
 
-            if len(re.findall(r'season \d+', search)) > 0:
-                spider_title.append('season ' + re.findall(r'\d+',re.findall(r'season \d+',search)[0])[0])
-                break
+            if 'season' in search:
+                season = search[search.index('season') + 1]
+                search.append(' season ' + season + ' ')
 
-            if len(re.findall(r's\d+', search)) > 0:
-                spider_title.append('s' + re.findall(r'\d+',re.findall(r's \d+',search)[0])[0])
-                break
+                if season < 10:
+                    search.append(' season 0' + season + ' ')
 
-        for search in spider.title:
+        for search in spider_title:
 
-            words_in_search = search.split('%20')
-
-#            print title,words_in_search
-
-            if all(word in title for word in words_in_search):
+            if all(word in title for word in search):
                 return item
 
         raise DropItem('Title does not match the content searched')

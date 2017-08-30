@@ -33,7 +33,7 @@ class _1337x(Indexer):
         title    = table.xpath('//td[@class="coll-1 name"]//a[not (@class="icon")]/text()')
         href     = table.xpath('//td[@class="coll-1 name"]//a[not (@class="icon")]/@href')
         seeders  = table.xpath('//td[contains(@class,"coll-2 seeds")]/text()')
-        leechers = table.xpath('//td[contains(@class,"coll-3 leeches"]/text()')
+        leechers = table.xpath('//td[contains(@class,"coll-3 leeches")]/text()')
         size     = table.xpath('//td[contains(@class,"coll-4 size")]/text()')
 
         for i in range(len(table)):
