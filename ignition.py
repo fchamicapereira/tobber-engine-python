@@ -24,9 +24,6 @@ class Ignition:
         # getting the settings of the project (settings.py)
         self.settings = get_project_settings()
 
-        # getting the tvdb instance
-        self.tvdb = Tvdb_api(self.settings['TVDB_API_CONFIG'])
-
         # processing input arguments
         self.process_args()
 
@@ -165,6 +162,10 @@ class Ignition:
             self.settings["LOG_FILE"] = 'tobber.log'
 
         if self.args.last_episode:
+
+            # getting the tvdb instance
+            self.tvdb = Tvdb_api(self.settings['TVDB_API_CONFIG'])
+            
             episode = self.tvdb.getLastEpisode(self.search)
             self.search = self.search + ' ' + episode
 
