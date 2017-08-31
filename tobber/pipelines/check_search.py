@@ -9,14 +9,22 @@ class Check_search(object):
         found = False
         separators = ['%20', '_', '.', '-', '+', '(', ')']
         title = item['title'].lower()
-        spider_title = [w.replace('%20', ' ').split(' ') for w in spider.title]
 
         for s in separators:
             title = title.replace(s,' ')
 
+        spider_title = [w.replace('%20', ' ').split(' ') for w in spider.title]
+
         for search in spider_title:
 
             if 'season' in search:
+
+                # if we're searching for an entire season,
+                # the title shouldn't have sXXeYY, which indicates
+                # an episode, not a full season
+                if re.match(r'^.*s\d+e\d+.*$', title) != None:
+                    raise DropItem('This is an episode, not a full season')
+
                 season = search[search.index('season') + 1]
                 search.append(' season ' + season + ' ')
 
