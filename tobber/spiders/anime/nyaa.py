@@ -36,5 +36,6 @@ class Nyaa(Indexer):
                 torrent     = torrent[i].extract().encode('ascii','ignore'),
                 size        = size[i].extract().replace('\n','').encode('ascii','ignore'),
                 category    = category[i].extract().replace('\n','').encode('ascii','ignore'),
-                site        = self.name
+                site        = self.name,
+                counter     = i
             )

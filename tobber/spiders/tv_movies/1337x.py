@@ -58,7 +58,8 @@ class _1337x(Indexer):
                 seeders     = data['seeders'],
                 leechers    = data['leechers'],
                 href        = data['href'],
-                site        = self.name
+                site        = self.name,
+                counter     = i
             )
 
     def parse_torrent_page(self, response):

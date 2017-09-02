@@ -23,8 +23,8 @@ class Eztv(Indexer):
         # xPath rules
         table   = response.xpath('//table//tr[@class="forum_header_border"]')
 
-        for row in table:
-            items = row.xpath('./td')
+        for i in range(len(table)):
+            items = table[i].xpath('./td')
 
             title   = self.extract_data(items[1].xpath('./a[@class="epinfo"]/text()'))
             href    = self.site + self.extract_data(items[1].xpath('./a[@class="epinfo"]/@href'))
@@ -40,5 +40,6 @@ class Eztv(Indexer):
                 size        = size,
                 seeders     = seeders,
                 href        = href,
-                site        = self.name
+                site        = self.name,
+                counter     = i
             )

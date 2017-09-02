@@ -49,5 +49,6 @@ class Zooqle(Indexer):
                 seeders     = peersTuple[0].encode('ascii','ignore'),
                 leechers    = peersTuple[1].encode('ascii','ignore'),
                 href        = self.site + href[i].extract().encode('ascii','ignore'),
-                site        = self.name
+                site        = self.name,
+                counter     = i
             )

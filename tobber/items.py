@@ -20,3 +20,4 @@ class Torrent(scrapy.Item):
     properties  = scrapy.Field()
     score       = scrapy.Field()
     site        = scrapy.Field()
+    counter     = scrapy.Field()
