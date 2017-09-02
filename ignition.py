@@ -108,6 +108,9 @@ class Ignition:
     def process_args(self):
 
         torrents_file = os.getcwd() + os.path.sep + 'torrents.json'
+        score_rules_file = os.getcwd() + os.path.sep + 'score_rules.json'
+
+        print score_rules_file
 
         # create args logic
         parser = argparse.ArgumentParser(description='tobber - a torrent grabber engine')
@@ -118,6 +121,7 @@ class Ignition:
         parser.add_argument('-s', '--season', type=int, default=-1, help="search for entire season")
         parser.add_argument('-f', '--file', nargs='?', type=str,
             default=None, const=torrents_file, help="export to file instead of mongo (if path is given, it will use that)")
+        parser.add_argument('-r', '--rules', type=str, default=score_rules_file, help="path to score_rules.json")
 
         # don't need input
         parser.add_argument('-t', '--torify', action='store_true', help="torify the tobber")
@@ -133,6 +137,14 @@ class Ignition:
 
         # join all the search words
         self.search = ' '.join(self.args.search)
+
+        # score rules path
+        if self.args.rules.split('.')[-1] != 'json':
+            print '---Error in the score_rules\'s file name given---'
+            print 'Please give a file instead of a path and make sure it has de .json extension'
+            exit()
+
+        self.settings['SCORE_RULES'] = self.args.rules
 
         # using anime tag
         if self.args.anime:
@@ -165,7 +177,7 @@ class Ignition:
 
             # getting the tvdb instance
             self.tvdb = Tvdb_api(self.settings['TVDB_API_CONFIG'])
-            
+
             episode = self.tvdb.getLastEpisode(self.search)
             self.search = self.search + ' ' + episode
 

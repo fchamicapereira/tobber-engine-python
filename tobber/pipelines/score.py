@@ -4,10 +4,15 @@ import math
 
 class Score(object):
 
-    # import rules
-    def __init__(self):
-        with open('score_rules.json') as score_rules:
+    def __init__(self, score_rules):
+        with open(score_rules) as score_rules:
             self.rules = json.load(score_rules)
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        return cls(
+            score_rules = crawler.settings.get('SCORE_RULES'),
+        )
 
     def process_item(self, item, spider):
 

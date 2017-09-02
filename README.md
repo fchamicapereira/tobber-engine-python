@@ -91,6 +91,18 @@ All the arguments are optional, except for the "search" argument.
 
     `python ignition.py -le Game of Thrones`
 
+- `--server`
+
+    Run tobber in server mode.
+
+    `python ignition.py -le Game of Thrones --server`
+
+- `-r` / `--rules`
+
+    Give the path of a score_rules.json file containing rules for scoring the torrents.
+
+    `python ignition.py -le Game of Thrones -r /home/somebody/documents/my_rules.json`
+
 
 ## Tweaking
 
