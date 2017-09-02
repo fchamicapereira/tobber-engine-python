@@ -110,8 +110,6 @@ class Ignition:
         torrents_file = os.getcwd() + os.path.sep + 'torrents.json'
         score_rules_file = os.getcwd() + os.path.sep + 'score_rules.json'
 
-        print score_rules_file
-
         # create args logic
         parser = argparse.ArgumentParser(description='tobber - a torrent grabber engine')
 
@@ -123,6 +121,8 @@ class Ignition:
             default=None, const=torrents_file, help="export to file instead of mongo (if path is given, it will use that)")
         parser.add_argument('-r', '--rules', type=str, default=score_rules_file, help="path to score_rules.json")
         parser.add_argument('-c', '--collection', type=str, help="name of the mongodb\'s collection that will save the data")
+        parser.add_argument('--rules-mongo', type=str,
+            help="name of the mongodb\'s collection and document that will contain the rules (collection/document)")
 
         # don't need input
         parser.add_argument('-t', '--torify', action='store_true', help="torify the tobber")
@@ -150,6 +150,11 @@ class Ignition:
         # mongo collection
         if self.args.collection:
             self.settings['MONGODB_COLLECTION'] = self.args.collection
+
+        if self.args.rules_mongo:
+            self.settings['RULES_MONGO'] = self.args.rules_mongo
+        else:
+            self.settings['RULES_MONGO'] = ""
 
         # using anime tag
         if self.args.anime:
