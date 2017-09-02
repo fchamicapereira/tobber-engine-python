@@ -122,6 +122,7 @@ class Ignition:
         parser.add_argument('-f', '--file', nargs='?', type=str,
             default=None, const=torrents_file, help="export to file instead of mongo (if path is given, it will use that)")
         parser.add_argument('-r', '--rules', type=str, default=score_rules_file, help="path to score_rules.json")
+        parser.add_argument('-c', '--collection', type=str, help="name of the mongodb\'s collection that will save the data")
 
         # don't need input
         parser.add_argument('-t', '--torify', action='store_true', help="torify the tobber")
@@ -145,6 +146,10 @@ class Ignition:
             exit()
 
         self.settings['SCORE_RULES'] = self.args.rules
+
+        # mongo collection
+        if self.args.collection:
+            self.settings['MONGODB_COLLECTION'] = self.args.collection
 
         # using anime tag
         if self.args.anime:
