@@ -8,7 +8,7 @@ class _1337x(Indexer):
     def start_requests(self):
         print '1337x is scrapying...'
 
-        self.site = "https://1337x.pl"
+        self.site = "https://1337x.to"
         urls = []
         search = self.site + "/search/"
         page = '/1/'
