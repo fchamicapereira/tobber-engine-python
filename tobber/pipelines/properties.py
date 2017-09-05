@@ -16,7 +16,8 @@ class Properties(object):
                 'Bluray':   ['bluray','blu-ray','bdrip','bd-rip','brrip','br rip','br-rip','bd'],
                 'Web-dl':   ['webdl','web-dl','web dl'],
                 'Webrip':   ['webrip','web-rip','web rip'],
-                'HDTV':     ['hdtv']
+                'HDTV':     ['hdtv'],
+                'CAM':      ['cam']
             },
 
             'audio': {
@@ -27,7 +28,8 @@ class Properties(object):
             'encoding': {
                 'HEVC':     ['x265','hevc','h265'],
                 'h264':     ['x264','h264'],
-                'DivX':     ['divx']
+                'DivX':     ['divx'],
+                'XviD':     ['xvid']
             },
 
             'format': {
