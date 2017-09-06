@@ -22,7 +22,7 @@ TVDB_API_CONFIG = './tvdb_api.config'
 #USER_AGENT = 'tobber (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -35,7 +35,7 @@ DOWNLOAD_DELAY = 2
 
 # Whether to enable the cookies middleware. If disabled, no cookies will be sent to web servers.
 # they're used to track bots
-COOKIES_ENABLED = False
+#COOKIES_ENABLED = False
 
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
