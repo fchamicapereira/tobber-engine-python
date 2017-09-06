@@ -55,14 +55,14 @@ class Score(object):
     def process_item(self, item, spider):
 
         # get size in bytes and log_10 it
-        score = math.log(self.getSizeBytes(item['size']))
+        score = self.getSizeBytes(item['size'])
         properties = item['properties']
 
         for key in self.rules:
             if key in properties:
                 score *= self.rules[key][properties[key]]
 
-        item['score'] = score
+        item['score'] = math.log(score)
 
         return item
 
