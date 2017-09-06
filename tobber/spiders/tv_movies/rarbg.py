@@ -39,7 +39,7 @@ class Rarbg(Indexer):
                 size        = self.extract_data(size),
                 seeders     = self.extract_data(seeders),
                 leechers    = self.extract_data(leechers),
-                href        = self.extract_data(href),
+                href        = self.site + self.extract_data(href),
                 site        = self.name,
                 counter     = i
             )
