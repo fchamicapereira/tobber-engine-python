@@ -31,15 +31,15 @@ ROBOTSTXT_OBEY = False
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
 
-DOWNLOAD_DELAY = 2
+DOWNLOAD_DELAY = 5
 
 # Whether to enable the cookies middleware. If disabled, no cookies will be sent to web servers.
 # they're used to track bots
 #COOKIES_ENABLED = False
 
 # The download delay setting will honor only one of:
-#CONCURRENT_REQUESTS_PER_DOMAIN = 16
-#CONCURRENT_REQUESTS_PER_IP = 16
+#CONCURRENT_REQUESTS_PER_DOMAIN = 1
+CONCURRENT_REQUESTS_PER_IP = 1
 
 # Disable cookies (enabled by default)
 #COOKIES_ENABLED = False
@@ -55,9 +55,10 @@ DOWNLOAD_DELAY = 2
 
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
-#SPIDER_MIDDLEWARES = {
-
-#}
+SPIDER_MIDDLEWARES = {
+    'scrapy.downloadermiddlewares.redirect.RedirectMiddleware': None,
+    'tobber.middlewares.ThreatDefenceRedirectMiddleware': 600
+}
 
 #This points to your local proxy server that talks to Tor
 HTTP_PROXY = 'http://127.0.0.1:8123'
