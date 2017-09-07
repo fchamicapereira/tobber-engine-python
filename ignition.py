@@ -207,6 +207,7 @@ class Ignition:
             process.crawl(_1337x, title=self.search, season=self.args.season, file=self.args.file)
             process.crawl(Rarbg, title=self.search, season=self.args.season, file=self.args.file)
             process.crawl(Torrentdownloads, title=self.search, season=self.args.season, file=self.args.file)
+            process.crawl(Limetorrents, title=self.search, season=self.args.season, file=self.args.file)
 
         process.start()
 
