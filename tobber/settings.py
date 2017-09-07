@@ -53,12 +53,12 @@ CONCURRENT_REQUESTS_PER_IP = 1
 #   'Accept-Language': 'en',
 #}
 
+REDIRECT_ENABLED = True
+
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
-SPIDER_MIDDLEWARES = {
-    'scrapy.downloadermiddlewares.redirect.RedirectMiddleware': None,
-    'tobber.middlewares.ThreatDefenceRedirectMiddleware': 600
-}
+#SPIDER_MIDDLEWARES = {
+#}
 
 #This points to your local proxy server that talks to Tor
 HTTP_PROXY = 'http://127.0.0.1:8123'
@@ -66,6 +66,8 @@ HTTP_PROXY = 'http://127.0.0.1:8123'
 DOWNLOADER_MIDDLEWARES = {
     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
     'scrapy_fake_useragent.middleware.RandomUserAgentMiddleware': 400,
+    #'scrapy.downloadermiddlewares.redirect.RedirectMiddleware': None,
+    #'tobber.middlewares.ThreatDefenceRedirectMiddleware': 600
 }
 
 USER_AGENT_LIST = [

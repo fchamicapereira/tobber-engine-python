@@ -202,10 +202,11 @@ class Ignition:
             process.crawl(Nyaa,  title=self.search, season=self.args.season, file=self.args.file)
 
         else:
-            #process.crawl(Zooqle, title=self.search, season=self.args.season, file=self.args.file)
-            #process.crawl(Eztv,   title=self.search, season=self.args.season, file=self.args.file)
-            #process.crawl(_1337x, title=self.search, season=self.args.season, file=self.args.file)
+            process.crawl(Zooqle, title=self.search, season=self.args.season, file=self.args.file)
+            process.crawl(Eztv,   title=self.search, season=self.args.season, file=self.args.file)
+            process.crawl(_1337x, title=self.search, season=self.args.season, file=self.args.file)
             process.crawl(Rarbg, title=self.search, season=self.args.season, file=self.args.file)
+            process.crawl(Torrentdownloads, title=self.search, season=self.args.season, file=self.args.file)
 
         process.start()
 
