@@ -33,7 +33,7 @@ class Check_search(object):
 
         for search in spider_title:
 
-            if all(word in title for word in search):
+            if all(word.lower() in title for word in search):
                 return item
 
-        raise DropItem('Title does not match the content searched')
+        raise DropItem('Title does not match the content searched\n',search)
