@@ -199,7 +199,7 @@ class Ignition:
         process = CrawlerProcess(self.settings)
 
         if self.args.anime:
-            #process.crawl(Nyaa,  title=self.search, season=self.args.season, file=self.args.file)
+            process.crawl(Nyaa,  title=self.search, season=self.args.season, file=self.args.file)
             process.crawl(Shanaproject,  title=self.search, season=self.args.season, file=self.args.file)
 
         else:

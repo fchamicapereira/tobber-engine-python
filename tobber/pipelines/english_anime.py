@@ -11,7 +11,9 @@ class English_anime(object):
         ]
 
         # only anime torrents have a category
-        if 'category' in item and all(words not in item['category'].lower() for words in avoid):
-            return item
+
+        if 'category' in item and item['category'] != None:
+            if all(words not in item['category'].lower() for words in avoid):
+                return item
 
         raise DropItem('Only english translated anime is desirable')
