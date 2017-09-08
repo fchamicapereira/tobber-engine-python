@@ -29,5 +29,7 @@ class Indexer(scrapy.Spider):
 
     def extract_data(self, arr):
         if len(arr) > 0:
-            return arr.extract()[0].encode('ascii', 'ignore')
+            data = arr.extract()[0].encode('ascii', 'ignore')
+            data = data.replace('\n','')
+            return data
         return None
