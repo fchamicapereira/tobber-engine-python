@@ -121,18 +121,18 @@ class Ignition:
             default=None, const=torrents_file, help="export to file instead of mongo (if path is given, it will use that)")
         parser.add_argument('-r', '--rules', type=str, default=score_rules_file, help="path to score_rules.json")
         parser.add_argument('-c', '--collection', type=str, help="name of the mongodb\'s collection that will save the data")
-        parser.add_argument('--skip', '--skip', type=int, nargs='+', help='''\n
-         Indicate all the numbers corresponding to the sites that you don\'t want to use.
+        parser.add_argument('--skip', nargs='+', help='''\n
+         Indicate all the sites that you don\'t want to use.
 
-         Site\'s corresponding numbers:
-            1) zooqle
-            2) 1337x
-            3) eztv
-            4) rarbg
-            5) torrentdownloads
-            6) limetorrents
-            7) nyaa
-            8) shanaproject
+         Options:
+            zooqle
+            1337x
+            eztv
+            rarbg
+            torrentdownloads
+            limetorrents
+            nyaa
+            shanaproject
          ''')
         parser.add_argument('--rules-mongo', type=str,
             help="name of the mongodb\'s collection and document that will contain the rules (collection/document)")
@@ -212,29 +212,29 @@ class Ignition:
         process = CrawlerProcess(self.settings)
 
         if self.args.anime:
-            if self.args.skip == None or 7 not in self.args.skip:
+            if self.args.skip == None or 'nyaa' not in self.args.skip:
                 process.crawl(Nyaa,  title=self.search, season=self.args.season, file=self.args.file)
 
-            if self.args.skip == None or 8 not in self.args.skip:
+            if self.args.skip == None or 'shanaproject' not in self.args.skip:
                 process.crawl(Shanaproject,  title=self.search, season=self.args.season, file=self.args.file)
 
         else:
-            if self.args.skip == None or 1 not in self.args.skip:
+            if self.args.skip == None or 'zooqle' not in self.args.skip:
                 process.crawl(Zooqle, title=self.search, season=self.args.season, file=self.args.file)
 
-            if self.args.skip == None or 2 not in self.args.skip:
+            if self.args.skip == None or '1337x' not in self.args.skip:
                 process.crawl(_1337x, title=self.search, season=self.args.season, file=self.args.file)
 
-            if self.args.skip == None or 3 not in self.args.skip:
+            if self.args.skip == None or 'eztv' not in self.args.skip:
                 process.crawl(Eztv,   title=self.search, season=self.args.season, file=self.args.file)
 
-            if self.args.skip == None or 4 not in self.args.skip:
+            if self.args.skip == None or 'rarbg' not in self.args.skip:
                 process.crawl(Rarbg, title=self.search, season=self.args.season, file=self.args.file)
 
-            if self.args.skip == None or 5 not in self.args.skip:
+            if self.args.skip == None or 'torrentdownloads' not in self.args.skip:
                 process.crawl(Torrentdownloads, title=self.search, season=self.args.season, file=self.args.file)
 
-            if self.args.skip == None or 6 not in self.args.skip:
+            if self.args.skip == None or 'limetorrents' not in self.args.skip:
                 process.crawl(Limetorrents, title=self.search, season=self.args.season, file=self.args.file)
 
         process.start()
