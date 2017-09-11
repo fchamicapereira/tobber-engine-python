@@ -26,8 +26,8 @@ class Properties(object):
             },
 
             'encoding': {
-                'HEVC':     ['x265','hevc','h265'],
-                'h264':     ['x264','h264'],
+                'HEVC':     ['x265','hevc','h265', 'h.265'],
+                'h264':     ['x264','h264', 'h.264'],
                 'DivX':     ['divx'],
                 'XviD':     ['xvid']
             },
