@@ -1,5 +1,6 @@
 import scrapy
 import pymongo
+from scrapy.exceptions import DropItem
 
 # store in mongodb
 
@@ -37,5 +38,9 @@ class Mongo(object):
         self.client.close()
 
     def process_item(self, item, spider):
-        self.collection.insert_one(dict(item))
-        return item
+
+        if 'magnet' not in item or self.collection.find_one({ "magnet": item['magnet'] }) == None:
+            self.collection.insert_one(dict(item))
+            return item
+
+        raise DropItem('Torrent already added',search)

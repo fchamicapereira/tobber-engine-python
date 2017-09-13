@@ -20,35 +20,46 @@ class Zooqle(Indexer):
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
-        #xPath rules
-        table   = response.xpath('//table//tr')
-        title   = table.xpath('./td[contains(@class,"text-trunc text-nowrap")]//a[contains(@class," small")]')
-        href    = title.xpath('./@href')
-        peers   = table.xpath('./td//div[contains(@class,"progress prog")]/@title')
-        magnet  = table.xpath('./td//a[@title="Magnet link"]/@href')
-        torrent = table.xpath('./td//a[@title="Generate .torrent"]/@href')
-        size    = table.xpath('./td//div[contains(@class,"progress prog prog-narrow")]//div[@class="progress-bar prog-blue prog-l"]/text()')
 
-        for i in range(len(torrent)):
+        #xPath rules
+        table   = response.xpath('//table[contains(@class,"table-torrents")]')
+        row     = table.xpath('./tr')
+
+        for i in range(len(row)):
+
+            data = row[i].xpath('./td')
+            href = data[1].xpath('./a/@href')
 
             # this is a hack
             # the title's text comes with <hl> tags that are
             # troublessome, so this will remove all the
             # garbage
-            prettyTitle = title[i].extract().split('>',1)[1][:-4]
-            prettyTitle = prettyTitle.replace('<hl>','').replace('</hl>','')
+            title   = data[1].xpath('./a')
+            title   = title[0].extract().split('>',1)[1][:-4]
+            title   = title.replace('<hl>','').replace('</hl>','')
+
+            links   = data[2].xpath('./ul//li')
+            magnet  = links[1].xpath('./a/@href')
+            torrent = links[2].xpath('./a/@href')
+
+            size    = data[3].xpath('./div//div/text()')
+
+            peers   = data[5].xpath('./div/@title')
 
             # Seeders : X | Leechers: Y
-            peersTuple = peers[i].re(r'(\d+).* (\d+)')
+            peersTuple = peers.re(r'(\d+).* (\d+)')
+
+            seeders  = peersTuple[0]
+            leechers = peersTuple[1]
 
             yield Torrent(
-                title       = prettyTitle,
-                magnet      = magnet[i].extract().encode('ascii','ignore'),
-                torrent     = self.site + torrent[i].extract().encode('ascii','ignore'),
-                size        = size[i].extract().replace('\n','').encode('ascii','ignore'),
-                seeders     = peersTuple[0].encode('ascii','ignore'),
-                leechers    = peersTuple[1].encode('ascii','ignore'),
-                href        = self.site + href[i].extract().encode('ascii','ignore'),
-                site        = self.name,
-                counter     = i
+            title       = title,
+            magnet      = self.extract_data(magnet),
+            href        = self.site + self.extract_data(href),
+            torrent     = self.site + self.extract_data(torrent),
+            size        = self.extract_data(size),
+            seeders     = seeders,
+            leechers    = leechers,
+            site        = self.name,
+            counter     = i
             )
