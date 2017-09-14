@@ -237,6 +237,9 @@ class Ignition:
             if self.args.skip == None or 'limetorrents' not in self.args.skip:
                 process.crawl(Limetorrents, title=self.search, season=self.args.season, file=self.args.file)
 
+            if self.args.skip == None or 'thepiratebay' not in self.args.skip:
+                process.crawl(Thepiratebay, title=self.search, season=self.args.season, file=self.args.file)
+
         process.start()
 
 
