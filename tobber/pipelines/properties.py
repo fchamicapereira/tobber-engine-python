@@ -73,7 +73,10 @@ class Properties(object):
         properties = {}
 
         for keys in self.template:
-            self.searchKeywords(title,keys,properties)
+            if keys == 'group':
+                self.searchGroup(title,keys,properties)
+            else:
+                self.searchKeywords(title,keys,properties)
 
         return properties
 
@@ -81,5 +84,21 @@ class Properties(object):
         for subkeys in self.template[keys]:
             for word in self.template[keys][subkeys]:
                 if word.lower() in title.lower():
+                    properties[keys] = subkeys
+                    return
+
+    def searchGroup(self,title,keys,properties):
+
+        separators = ['%20', '_', '.', '-', '+', '(', ')', '[', ']']
+        title = title.lower()
+
+        for s in separators:
+            title = title.replace(s,' ')
+
+        title = title.split(' ')
+
+        for subkeys in self.template[keys]:
+            for word in self.template[keys][subkeys]:
+                if word.lower() in title:
                     properties[keys] = subkeys
                     return

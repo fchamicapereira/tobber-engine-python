@@ -36,4 +36,4 @@ class Check_search(object):
             if all(word.lower() in title for word in search):
                 return item
 
-        raise DropItem('Title does not match the content searched\n',search)
+        raise DropItem('Title does not match the content searched\n',search, title)
