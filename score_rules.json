@@ -12,19 +12,45 @@
         "Web-dl":   1.3,
         "Webrip":   1.1,
         "HDTV":     0.5,
-	"CAM":	    0.01
+	      "CAM":	    0.01
     },
 
     "audio": {
-        "FLAC":     1.1,
-        "AAC":      1
+        "FLAC":     2,
+        "AAC":      1,
+        "DTS-HD":   2,
+        "DD":       2
     },
 
     "encoding": {
         "HEVC":     4,
         "h264":     1,
         "DivX":     0.2,
-	"XviD":     0.2
+	      "XviD":     0.2
+    },
+
+    "group": {
+        "PublicHD": 2,
+        "SPARKS":   2,
+        "Yify":     0.1,
+        "Gyrm":     2,
+        "CtrlHD":   2,
+        "Axxo":     2,
+        "VietHD":   2,
+        "TayTO":    2,
+        "EbP":      2,
+        "ESiR":     2,
+        "DON":      2,
+        "NTb":      2,
+        "IDE":      2,
+        "EA":       2,
+        "HaB":      2,
+        "CRiSC":    2,
+        "BMF":      2,
+        "SA89":     2,
+        "CRiME":    2,
+        "RightSiZE":    2,
+        "HorribleSubs": 2
     },
 
     "format": {

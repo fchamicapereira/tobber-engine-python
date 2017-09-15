@@ -22,14 +22,40 @@ class Properties(object):
 
             'audio': {
                 'FLAC':     ['flac'],
-                'AAC':      ['aac']
+                'AAC':      ['aac'],
+                'DTS-HD':   ['dts-hd', 'dts hd', 'dts'],
+                'DD':       ['dd 5.1', 'dd 5 1', 'ac3', 'dd', 'dd5.1']
             },
 
             'encoding': {
                 'HEVC':     ['x265','hevc','h265', 'h.265'],
-                'h264':     ['x264','h264', 'h.264'],
+                'h264':     ['x264','h264', 'h.264', 'avc'],
                 'DivX':     ['divx'],
                 'XviD':     ['xvid']
+            },
+
+            'group': {
+                'PublicHD': ['publichd'],
+                'SPARKS':   ['sparks'],
+                'Yify':     ['yify'],
+                'Gyrm':     ['gyrm'],
+                'CtrlHD':   ['ctrlhd'],
+                'Axxo':     ['axxo'],
+                'VietHD':   ['viethd'],
+                'TayTO':    ['tayto'],
+                'EbP':      ['ebp'],
+                'ESiR':     ['esir'],
+                'DON':      ['don'],
+                'NTb':      ['ntb'],
+                'IDE':      ['ide'],
+                'EA':       ['ea'],
+                'HaB':      ['hab'],
+                'CRiSC':    ['crisc'],
+                'BMF':      ['bmf'],
+                'SA89':     ['sa89'],
+                'CRiME':    ['crime'],
+                'RightSiZE':    ['rightsize'],
+                'HorribleSubs': ['horriblesubs']
             },
 
             'format': {
