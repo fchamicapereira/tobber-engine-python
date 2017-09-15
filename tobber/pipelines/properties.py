@@ -38,7 +38,7 @@ class Properties(object):
                 'PublicHD': ['publichd'],
                 'SPARKS':   ['sparks'],
                 'Yify':     ['yify'],
-                'Gyrm':     ['gyrm'],
+                'Grym':     ['grym'],
                 'CtrlHD':   ['ctrlhd'],
                 'Axxo':     ['axxo'],
                 'VietHD':   ['viethd'],
