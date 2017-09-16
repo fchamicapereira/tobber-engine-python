@@ -5,17 +5,17 @@ class Properties(object):
     def __init__(self):
         self.template = {
             'resolution': {
-                '2160p':    ['uhd','4k','2160'],
-                '1080p':    ['hd','1080'],
-                '720p':     ['720'],
-                '480p':     ['480']
+                '2160p':    ['uhd','4k','2160', '2160p', '3840x2160'],
+                '1080p':    ['hd','1080', '1080p', '1920x1080'],
+                '720p':     ['720', '720p', '1280x720'],
+                '480p':     ['480', '480p']
             },
 
             'source': {
                 'Remux':    ['remux'],
-                'Bluray':   ['bluray','blu-ray','bdrip','bd-rip','brrip','br rip','br-rip','bd'],
-                'Web-dl':   ['webdl','web-dl','web dl'],
-                'Webrip':   ['webrip','web-rip','web rip'],
+                'Bluray':   ['bluray','blu ray','bdrip','bd rip','brrip','br rip','bd'],
+                'Web-dl':   ['webdl','web dl','web dl'],
+                'Webrip':   ['webrip','web rip','web rip'],
                 'HDTV':     ['hdtv'],
                 'CAM':      ['cam']
             },
@@ -23,13 +23,13 @@ class Properties(object):
             'audio': {
                 'FLAC':     ['flac'],
                 'AAC':      ['aac'],
-                'DTS-HD':   ['dts-hd', 'dts hd', 'dts'],
-                'DD':       ['dd 5.1', 'dd 5 1', 'ac3', 'dd', 'dd5.1']
+                'DTS-HD':   ['dts hd', 'dts'],
+                'DD':       ['dd 5 1', 'ac3', 'dd', 'dd5 1']
             },
 
             'encoding': {
-                'HEVC':     ['x265','hevc','h265', 'h.265'],
-                'h264':     ['x264','h264', 'h.264', 'avc'],
+                'HEVC':     ['x265','hevc','h265', 'h 265'],
+                'h264':     ['x264','h264', 'h 264', 'avc'],
                 'DivX':     ['divx'],
                 'XviD':     ['xvid']
             },
@@ -73,10 +73,10 @@ class Properties(object):
         properties = {}
 
         for keys in self.template:
-            if keys == 'group':
-                self.searchGroup(title,keys,properties)
-            else:
+            if keys == 'title':
                 self.searchKeywords(title,keys,properties)
+            else:
+                self.searchIsolated(title,keys,properties)
 
         return properties
 
@@ -87,7 +87,7 @@ class Properties(object):
                     properties[keys] = subkeys
                     return
 
-    def searchGroup(self,title,keys,properties):
+    def searchIsolated(self,title,keys,properties):
 
         separators = ['%20', '_', '.', '-', '+', '(', ')', '[', ']']
         title = title.lower()
