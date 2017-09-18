@@ -17,7 +17,8 @@ class Properties(object):
                 'Web-dl':   ['webdl','web dl','web dl'],
                 'Webrip':   ['webrip','web rip','web rip'],
                 'HDTV':     ['hdtv'],
-                'CAM':      ['cam']
+                'CAM':      ['cam'],
+                "TS":       ['ts', 'hdts', 'hd ts'],
             },
 
             'audio': {
