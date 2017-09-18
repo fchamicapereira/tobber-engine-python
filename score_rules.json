@@ -1,61 +1,223 @@
 {
-    "resolution": {
-        "2160p":    1,
-        "1080p":    1.2,
-        "720p":     1.5,
-        "480p":     0.5
+  "resolution": {
+    "2160p": {
+      "keywords": ["uhd","4k","2160", "2160p", "3840x2160"],
+      "score": 1
     },
 
-    "source": {
-        "Remux":    2,
-        "Bluray":   1.5,
-        "Web-dl":   1.3,
-        "Webrip":   1.1,
-        "HDTV":     0.5,
-	      "CAM":	    0.01,
-        "TS":       0.01
+    "1080p": {
+      "keywords": ["hd","1080", "1080p", "1920x1080"],
+      "score": 1.2
     },
 
-    "audio": {
-        "FLAC":     2,
-        "AAC":      1,
-        "DTS-HD":   2,
-        "DD":       2
+    "720p": {
+      "keywords": ["720", "720p", "1280x720"],
+      "score": 1.5
     },
 
-    "encoding": {
-        "HEVC":     4,
-        "h264":     1,
-        "DivX":     0.2,
-	      "XviD":     0.2
-    },
-
-    "group": {
-        "PublicHD": 1,
-        "SPARKS":   1,
-        "Yify":     0.1,
-        "Grym":     1,
-        "CtrlHD":   1,
-        "Axxo":     1,
-        "VietHD":   1,
-        "TayTO":    1,
-        "EbP":      1,
-        "ESiR":     1,
-        "DON":      1,
-        "NTb":      1,
-        "IDE":      1,
-        "EA":       1,
-        "HaB":      1,
-        "CRiSC":    1,
-        "BMF":      1,
-        "SA89":     1,
-        "CRiME":    1,
-        "RightSiZE":    1,
-        "HorribleSubs": 1
-    },
-
-    "format": {
-        "mkv":      1,
-        "mp4":      0.5
+    "480p": {
+      "keywords": ["480", "480p"],
+      "score": 0.5
     }
+  },
+
+  "source": {
+    "Remux": {
+      "keywords": ["remux"],
+      "score": 2
+    },
+
+    "Bluray": {
+      "keywords": ["bluray","blu ray","bdrip","bd rip","brrip","br rip","bd"],
+      "score": 1.5
+    },
+
+    "Web-dl": {
+      "keywords": ["webdl","web dl"],
+      "score": 1.3
+    },
+
+    "Webrip": {
+      "keywords": ["webrip","web rip","web rip"],
+      "score": 1.1
+    },
+
+    "HDTV": {
+      "keywords": ["hdtv"],
+      "score": 0.5
+    },
+
+    "CAM": {
+      "keywords": ["cam"],
+      "score": 0.01
+    },
+
+    "TS": {
+      "keywords": ["ts", "hdts", "hd ts"],
+      "score": 0.01
+    }
+  },
+
+  "audio": {
+    "FLAC": {
+      "keywords": ["flac"],
+      "score": 2
+    },
+
+    "AAC": {
+      "keywords": ["aac"],
+      "score": 1
+    },
+
+    "DTS-HD": {
+      "keywords": ["dts hd", "dts"],
+      "score": 2
+    },
+
+    "DD": {
+      "keywords": ["dd 5 1", "ac3", "dd", "dd5 1"],
+      "score": 2
+    }
+  },
+
+  "encoding": {
+    "HEVC": {
+      "keywords": ["x265","hevc","h265", "h 265"],
+      "score": 4
+    },
+
+    "h264": {
+      "keywords": ["x264","h264", "h 264", "avc"],
+      "score": 1
+    },
+
+    "DivX": {
+      "keywords": ["divx"],
+      "score": 0.2
+    },
+
+    "XviD": {
+      "keywords": ["xvid"],
+      "score": 0.2
+    }
+  },
+
+  "group": {
+    "PublicHD": {
+      "keywords": ["publichd"],
+      "score": 1
+    },
+
+    "SPARKS": {
+      "keywords": ["sparks"],
+      "score": 1
+    },
+
+    "Yify": {
+      "keywords": ["yify"],
+      "score": 0.1
+    },
+
+    "Grym": {
+      "keywords": ["grym"],
+      "score": 1
+    },
+
+    "CtrlHD": {
+      "keywords": ["ctrlhd"],
+      "score": 1
+    },
+
+    "Axxo": {
+      "keywords": ["axxo"],
+      "score": 1
+    },
+
+    "VietHD": {
+      "keywords": ["viethd"],
+      "score": 1
+    },
+
+    "TayTO": {
+      "keywords": ["tayto"],
+      "score": 1
+    },
+
+    "EbP": {
+      "keywords": ["ebp"],
+      "score": 1
+    },
+
+    "ESiR": {
+      "keywords": ["esir"],
+      "score": 1
+    },
+
+    "DON": {
+      "keywords": ["don"],
+      "score": 1
+    },
+
+    "NTb": {
+      "keywords": ["ntb"],
+      "score": 1
+    },
+
+    "IDE": {
+      "keywords": ["ide"],
+      "score": 1
+    },
+
+    "EA": {
+      "keywords": ["ea"],
+      "score": 1
+    },
+
+    "HaB": {
+      "keywords": ["hab"],
+      "score": 1
+    },
+
+    "CRiSC": {
+      "keywords": ["crisc"],
+      "score": 1
+    },
+
+    "BMF": {
+      "keywords": ["bmf"],
+      "score": 1
+    },
+
+    "SA89": {
+      "keywords": ["sa89"],
+      "score": 1
+    },
+
+    "CRiME": {
+      "keywords": ["crime"],
+      "score": 1
+    },
+
+    "RightSiZE": {
+      "keywords": ["rightsize"],
+      "score": 1
+    },
+
+    "HorribleSubs": {
+      "keywords": ["horriblesubs"],
+      "score": 1
+    }
+  },
+
+  "format": {
+    "mkv": {
+      "keywords": ["mkv"],
+      "score": 1
+    },
+
+    "mp4": {
+      "keywords": ["mp4"],
+      "score": 0.1
+    }
+  }
 }

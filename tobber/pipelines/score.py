@@ -8,6 +8,7 @@ class Score(object):
     def __init__(self, score_rules, rules_mongo, mongo_server, mongo_port, mongo_db):
         if len(rules_mongo) == 0:
             self.load_rules_from_file(score_rules)
+            self.fromFile = True
 
         else:
             rules = rules_mongo.split('/')
@@ -33,8 +34,10 @@ class Score(object):
 
             if 'rules' in user:
                 self.rules = user["rules"]
+                self.fromFile = False
             else:
                 self.load_rules_from_file(score_rules)
+                self.fromFile = True
 
             client.close()
 
@@ -60,7 +63,10 @@ class Score(object):
 
         for key in self.rules:
             if key in properties:
-                score *= self.rules[key][properties[key]]
+                if self.fromFile:
+                    score *= self.rules[key][properties[key]]["score"]
+                else:
+                    score *= self.rules[key][properties[key]]
 
         item['score'] = math.log(score)
 
