@@ -91,6 +91,11 @@
       "score": 1
     },
 
+    "h262": {
+      "keywords": ["h262", "h 262", "mpeg2", "mpeg 2"],
+      "score": 0.5
+    },
+
     "DivX": {
       "keywords": ["divx"],
       "score": 0.2
