@@ -87,7 +87,7 @@
     },
 
     "h264": {
-      "keywords": ["x264","h264", "h 264", "avc"],
+      "keywords": ["x264","h264", "h 264", "avc", "mpeg4", "mpeg 4"],
       "score": 1
     },
 
