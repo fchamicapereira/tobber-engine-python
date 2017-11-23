@@ -1,5 +1,6 @@
 import scrapy
 import json
+import re
 
 class Properties(object):
 
@@ -28,15 +29,19 @@ class Properties(object):
 
     def searchIsolated(self,title,keys,properties):
 
-        separators = ['%20', '_', '.', '-', '+', '(', ')', '[', ']']
+        separators = ['%20', '_', '.', '+', '(', ')', '[', ']']
         title = title.lower()
 
         for s in separators:
             title = title.replace(s,' ')
 
+        #title = title.split(' ')
+
         for subkeys in self.score_rules[keys]:
             for word in self.score_rules[keys][subkeys]["keywords"]:
+                
+                pattern = re.compile("^.*( |-)" + word.lower() + "( |-).*$")
 
-                if word.lower() in title:
+                if pattern.match(title):
                     properties[keys] = subkeys
                     return
